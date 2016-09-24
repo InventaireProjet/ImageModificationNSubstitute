@@ -1,4 +1,6 @@
-﻿namespace ImageEdgeDetection
+﻿using System;
+
+namespace ImageEdgeDetection
 {
     partial class MainForm
     {
@@ -30,8 +32,11 @@
         {
             this.picPreview = new System.Windows.Forms.PictureBox();
             this.btnOpenOriginal = new System.Windows.Forms.Button();
+            this.btnApplyFilter = new System.Windows.Forms.Button();
+            this.btnResetAll = new System.Windows.Forms.Button();
             this.btnSaveNewImage = new System.Windows.Forms.Button();
             this.cmbEdgeDetection = new System.Windows.Forms.ComboBox();
+            this.cmbApplyFilter = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,13 +64,37 @@
             this.btnOpenOriginal.UseVisualStyleBackColor = true;
             this.btnOpenOriginal.Click += new System.EventHandler(this.btnOpenOriginal_Click);
             // 
+
+            // btnApplyFilter
+            // 
+            this.btnApplyFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnApplyFilter.Location = new System.Drawing.Point(462, 618);
+            this.btnApplyFilter.Name = "btnApplyFilter";
+            this.btnApplyFilter.Size = new System.Drawing.Size(150, 46);
+            this.btnApplyFilter.TabIndex = 16;
+            this.btnApplyFilter.Text = "Go to filters";
+            this.btnApplyFilter.UseVisualStyleBackColor = true;
+            this.btnApplyFilter.Click += new System.EventHandler(this.btnApplyFilter_Click);
+            // 
+            // btnResetAll
+            // 
+            this.btnResetAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnResetAll.Location = new System.Drawing.Point(12, 618);
+            this.btnResetAll.Name = "btnResetAll";
+            this.btnResetAll.Size = new System.Drawing.Size(150, 46);
+            this.btnResetAll.TabIndex = 16;
+            this.btnResetAll.Text = "Reset";
+            this.btnResetAll.UseVisualStyleBackColor = true;
+            this.btnResetAll.Click += new System.EventHandler(this.btnResetAll_Click);
+            // 
+
             // btnSaveNewImage
             // 
             this.btnSaveNewImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSaveNewImage.Location = new System.Drawing.Point(462, 618);
             this.btnSaveNewImage.Name = "btnSaveNewImage";
             this.btnSaveNewImage.Size = new System.Drawing.Size(150, 46);
-            this.btnSaveNewImage.TabIndex = 16;
+            this.btnSaveNewImage.TabIndex = 17;
             this.btnSaveNewImage.Text = "Save Image";
             this.btnSaveNewImage.UseVisualStyleBackColor = true;
             this.btnSaveNewImage.Click += new System.EventHandler(this.btnSaveNewImage_Click);
@@ -100,11 +129,39 @@
             this.cmbEdgeDetection.TabIndex = 20;
             this.cmbEdgeDetection.SelectedIndexChanged += new System.EventHandler(this.NeighbourCountValueChangedEventHandler);
             // 
+            // cmbApplyFilter
+            // 
+            this.cmbApplyFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbApplyFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbApplyFilter.FormattingEnabled = true;
+            this.cmbApplyFilter.Items.AddRange(new object[] {
+            "None",
+            "Night Filter",
+            "Hell Filter",
+            "Miami Filter",
+            "Zen Filter",
+            "Black and White",
+            "Swap Filter",
+            "Crazy Filter",
+            "Mega Filter Green",
+            "Mega Filter Orange",
+            "Mega Filter Pink",
+            "Mega Filter Custom",
+            "Rainbow Filter"});
+            this.cmbApplyFilter.Location = new System.Drawing.Point(168, 627);
+            this.cmbApplyFilter.Name = "cmbApplyFilter";
+            this.cmbApplyFilter.Size = new System.Drawing.Size(288, 32);
+            this.cmbApplyFilter.TabIndex = 20;
+            this.cmbApplyFilter.SelectedIndexChanged += new System.EventHandler(this.NeighbourCountValueChangedEventHandler);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(624, 675);
             this.Controls.Add(this.cmbEdgeDetection);
+            this.Controls.Add(this.cmbApplyFilter);
+            this.Controls.Add(this.btnApplyFilter);
+            this.Controls.Add(this.btnResetAll);
             this.Controls.Add(this.btnSaveNewImage);
             this.Controls.Add(this.btnOpenOriginal);
             this.Controls.Add(this.picPreview);
@@ -113,18 +170,25 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Image Edge Detection";
+            this.Text = "Image Modification";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
             this.ResumeLayout(false);
 
         }
 
+      
+
         #endregion
 
         private System.Windows.Forms.PictureBox picPreview;
         private System.Windows.Forms.Button btnOpenOriginal;
+        private System.Windows.Forms.Button btnApplyFilter;
+        private System.Windows.Forms.Button btnResetAll;
         private System.Windows.Forms.Button btnSaveNewImage;
         private System.Windows.Forms.ComboBox cmbEdgeDetection;
+        //Ajout d'une combobox pour les filtres
+        private System.Windows.Forms.ComboBox cmbApplyFilter;
     }
 }
 

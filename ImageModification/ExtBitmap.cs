@@ -46,15 +46,15 @@ namespace ImageEdgeDetection
             return bitmapResult;
         }
 
-        private static Bitmap ConvolutionFilter(Bitmap sourceBitmap, 
-                                             double[,] filterMatrix, 
-                                                  double factor = 1, 
-                                                       int bias = 0, 
-                                             bool grayscale = false) 
+        private static Bitmap ConvolutionFilter(Bitmap sourceBitmap,
+                                             double[,] filterMatrix,
+                                                  double factor = 1,
+                                                       int bias = 0,
+                                             bool grayscale = false)
         {
             BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0,
                                      sourceBitmap.Width, sourceBitmap.Height),
-                                                       ImageLockMode.ReadOnly, 
+                                                       ImageLockMode.ReadOnly,
                                                  PixelFormat.Format32bppArgb);
 
             byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
@@ -88,46 +88,46 @@ namespace ImageEdgeDetection
             int filterWidth = filterMatrix.GetLength(1);
             int filterHeight = filterMatrix.GetLength(0);
 
-            int filterOffset = (filterWidth-1) / 2;
+            int filterOffset = (filterWidth - 1) / 2;
             int calcOffset = 0;
 
             int byteOffset = 0;
 
-            for (int offsetY = filterOffset; offsetY < 
+            for (int offsetY = filterOffset; offsetY <
                 sourceBitmap.Height - filterOffset; offsetY++)
             {
-                for (int offsetX = filterOffset; offsetX < 
+                for (int offsetX = filterOffset; offsetX <
                     sourceBitmap.Width - filterOffset; offsetX++)
                 {
                     blue = 0;
                     green = 0;
                     red = 0;
 
-                    byteOffset = offsetY * 
-                                 sourceData.Stride + 
+                    byteOffset = offsetY *
+                                 sourceData.Stride +
                                  offsetX * 4;
 
-                    for (int filterY = -filterOffset; 
+                    for (int filterY = -filterOffset;
                         filterY <= filterOffset; filterY++)
                     {
                         for (int filterX = -filterOffset;
                             filterX <= filterOffset; filterX++)
                         {
 
-                            calcOffset = byteOffset + 
-                                         (filterX * 4) + 
+                            calcOffset = byteOffset +
+                                         (filterX * 4) +
                                          (filterY * sourceData.Stride);
 
                             blue += (double)(pixelBuffer[calcOffset]) *
-                                    filterMatrix[filterY + filterOffset, 
+                                    filterMatrix[filterY + filterOffset,
                                                         filterX + filterOffset];
 
                             green += (double)(pixelBuffer[calcOffset + 1]) *
-                                     filterMatrix[filterY + filterOffset, 
+                                     filterMatrix[filterY + filterOffset,
                                                         filterX + filterOffset];
 
                             red += (double)(pixelBuffer[calcOffset + 2]) *
-                                   filterMatrix[filterY + filterOffset, 
+                                   filterMatrix[filterY + filterOffset,
                                                       filterX + filterOffset];
                         }
                     }
@@ -313,19 +313,19 @@ namespace ImageEdgeDetection
             return resultBitmap;
         }
 
-        public static Bitmap Laplacian3x3Filter(this Bitmap sourceBitmap, 
+        public static Bitmap Laplacian3x3Filter(this Bitmap sourceBitmap,
                                                     bool grayscale = true)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
                                     Matrix.Laplacian3x3, 1.0, 0, grayscale);
 
             return resultBitmap;
         }
 
-        public static Bitmap Laplacian5x5Filter(this Bitmap sourceBitmap, 
+        public static Bitmap Laplacian5x5Filter(this Bitmap sourceBitmap,
                                                     bool grayscale = true)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
                                     Matrix.Laplacian5x5, 1.0, 0, grayscale);
 
             return resultBitmap;
@@ -333,7 +333,7 @@ namespace ImageEdgeDetection
 
         public static Bitmap LaplacianOfGaussianFilter(this Bitmap sourceBitmap)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
                                   Matrix.LaplacianOfGaussian, 1.0, 0, true);
 
             return resultBitmap;
@@ -341,10 +341,10 @@ namespace ImageEdgeDetection
 
         public static Bitmap Laplacian3x3OfGaussian3x3Filter(this Bitmap sourceBitmap)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
                                    Matrix.Gaussian3x3, 1.0 / 16.0, 0, true);
 
-            resultBitmap = ExtBitmap.ConvolutionFilter(resultBitmap, 
+            resultBitmap = ExtBitmap.ConvolutionFilter(resultBitmap,
                                  Matrix.Laplacian3x3, 1.0, 0, false);
 
             return resultBitmap;
@@ -352,10 +352,10 @@ namespace ImageEdgeDetection
 
         public static Bitmap Laplacian3x3OfGaussian5x5Filter1(this Bitmap sourceBitmap)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
                              Matrix.Gaussian5x5Type1, 1.0 / 159.0, 0, true);
 
-            resultBitmap = ExtBitmap.ConvolutionFilter(resultBitmap, 
+            resultBitmap = ExtBitmap.ConvolutionFilter(resultBitmap,
                                  Matrix.Laplacian3x3, 1.0, 0, false);
 
             return resultBitmap;
@@ -363,10 +363,10 @@ namespace ImageEdgeDetection
 
         public static Bitmap Laplacian3x3OfGaussian5x5Filter2(this Bitmap sourceBitmap)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
                              Matrix.Gaussian5x5Type2, 1.0 / 256.0, 0, true);
 
-            resultBitmap = ExtBitmap.ConvolutionFilter(resultBitmap, 
+            resultBitmap = ExtBitmap.ConvolutionFilter(resultBitmap,
                                  Matrix.Laplacian3x3, 1.0, 0, false);
 
             return resultBitmap;
@@ -374,7 +374,7 @@ namespace ImageEdgeDetection
 
         public static Bitmap Laplacian5x5OfGaussian3x3Filter(this Bitmap sourceBitmap)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
                                    Matrix.Gaussian3x3, 1.0 / 16.0, 0, true);
 
             resultBitmap = ExtBitmap.ConvolutionFilter(resultBitmap,
@@ -385,7 +385,7 @@ namespace ImageEdgeDetection
 
         public static Bitmap Laplacian5x5OfGaussian5x5Filter1(this Bitmap sourceBitmap)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
                              Matrix.Gaussian5x5Type1, 1.0 / 159.0, 0, true);
 
             resultBitmap = ExtBitmap.ConvolutionFilter(resultBitmap,
@@ -396,47 +396,136 @@ namespace ImageEdgeDetection
 
         public static Bitmap Laplacian5x5OfGaussian5x5Filter2(this Bitmap sourceBitmap)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
-                                                   Matrix.Gaussian5x5Type2, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
+                                                   Matrix.Gaussian5x5Type2,
                                                      1.0 / 256.0, 0, true);
 
-            resultBitmap = ExtBitmap.ConvolutionFilter(resultBitmap, 
+            resultBitmap = ExtBitmap.ConvolutionFilter(resultBitmap,
                                  Matrix.Laplacian5x5, 1.0, 0, false);
 
             return resultBitmap;
         }
 
-        public static Bitmap Sobel3x3Filter(this Bitmap sourceBitmap, 
+        public static Bitmap Sobel3x3Filter(this Bitmap sourceBitmap,
                                                 bool grayscale = true)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
-                                                 Matrix.Sobel3x3Horizontal, 
-                                                   Matrix.Sobel3x3Vertical, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
+                                                 Matrix.Sobel3x3Horizontal,
+                                                   Matrix.Sobel3x3Vertical,
                                                         1.0, 0, grayscale);
 
             return resultBitmap;
         }
 
-        public static Bitmap PrewittFilter(this Bitmap sourceBitmap, 
+        public static Bitmap PrewittFilter(this Bitmap sourceBitmap,
                                                bool grayscale = true)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
-                                               Matrix.Prewitt3x3Horizontal, 
-                                                 Matrix.Prewitt3x3Vertical, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
+                                               Matrix.Prewitt3x3Horizontal,
+                                                 Matrix.Prewitt3x3Vertical,
                                                         1.0, 0, grayscale);
 
             return resultBitmap;
         }
 
-        public static Bitmap KirschFilter(this Bitmap sourceBitmap, 
+        public static Bitmap KirschFilter(this Bitmap sourceBitmap,
                                               bool grayscale = true)
         {
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap, 
-                                                Matrix.Kirsch3x3Horizontal, 
-                                                  Matrix.Kirsch3x3Vertical, 
+            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
+                                                Matrix.Kirsch3x3Horizontal,
+                                                  Matrix.Kirsch3x3Vertical,
                                                         1.0, 0, grayscale);
 
             return resultBitmap;
         }
-    }  
+
+        public static Bitmap NightFilter(this Bitmap sourceBitmap)
+        {
+            Bitmap resultBitmap = ImageFilters.ApplyFilter(sourceBitmap, 1, 1, 1, 25);
+
+            return resultBitmap;
+        }
+
+        public static Bitmap HellFilter(this Bitmap sourceBitmap)
+        {
+            Bitmap resultBitmap = ImageFilters.ApplyFilter(sourceBitmap, 1, 1, 10, 15);
+
+            return resultBitmap;
+        }
+
+        public static Bitmap MiamiFilter(this Bitmap sourceBitmap)
+        {
+            Bitmap resultBitmap = ImageFilters.ApplyFilter(sourceBitmap, 1, 1, 10, 1);
+
+            return resultBitmap;
+        }
+
+        public static Bitmap ZenFilter(this Bitmap sourceBitmap)
+        {
+            Bitmap resultBitmap = ImageFilters.ApplyFilter(sourceBitmap, 1, 10, 1, 1);
+
+            return resultBitmap;
+        }
+
+
+        public static Bitmap BlackNWhite(this Bitmap sourceBitmap)
+        {
+            Bitmap resultBitmap = ImageFilters.BlackWhite(sourceBitmap);
+
+            return resultBitmap;
+        }
+
+
+        public static Bitmap SwapFilter(this Bitmap sourceBitmap)
+        {
+            Bitmap resultBitmap = ImageFilters.ApplyFilterSwap(sourceBitmap);
+
+            return resultBitmap;
+        }
+
+        public static Bitmap CrazyFilter(this Bitmap sourceBitmap)
+        {
+            System.Drawing.Image te = ImageFilters.ApplyFilterSwapDivide(sourceBitmap, 1, 1, 2, 1);
+            Bitmap resultBitmap = ImageFilters.ApplyFilterSwap(new Bitmap(te));
+            return resultBitmap;
+        }
+
+
+        /*
+
+        private void megafilgreen(object sender, EventArgs e)
+        {
+            pictureBox1.Image = Origin;
+            Color c = Color.Green;
+            pictureBox1.Image = ImageFilters.ApplyFilterMega(new Bitmap(pictureBox1.Image), 230, 110, c);
+        }
+
+       
+
+        private void megafiltoran(object sender, EventArgs e)
+        {
+            pictureBox1.Image = Origin;
+            Color c = Color.Orange;
+            pictureBox1.Image = ImageFilters.ApplyFilterMega(new Bitmap(pictureBox1.Image), 230, 110, c);
+        }
+
+        private void megafilpink(object sender, EventArgs e)
+        {
+            Color c = Color.Pink;
+            pictureBox1.Image = ImageFilters.ApplyFilterMega(new Bitmap(pictureBox1.Image), 230, 110, c);
+        }
+
+        private void megafiltcustom(object sender, EventArgs e)
+        {
+            pictureBox1.Image = Origin;
+            pictureBox1.Image = ImageFilters.ApplyFilterMega(new Bitmap(pictureBox1.Image), 230, 110, SecondPicBrush);
+        }
+
+        private void rainbow(object sender, EventArgs e)
+        {
+            pictureBox1.Image = Origin;
+            pictureBox1.Image = ImageFilters.RainbowFilter(new Bitmap(pictureBox1.Image));
+        }
+        */
+    }
 }
