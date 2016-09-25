@@ -22,21 +22,21 @@ namespace ImageEdgeDetection
         private Bitmap originalBitmap = null;
         private Bitmap previewBitmap = null;
         //Variable used to store the image preview after its modification by an edge filter
-        private Bitmap previewModifiedEdge = null;
+        private Bitmap previewModifiedFilter = null;
         private Bitmap resultBitmap = null;
         //Boolean used to distinguish if the user is applying edge filters (edge = true) or color filters, used by the ValueChangedEventHandler
-        private bool edge = true;
+        private bool edge = false;
 
         public MainForm()
         {
             InitializeComponent();
 
-            cmbEdgeDetection.SelectedIndex = 0;
-            // Elements that appear only for the second filters are made invisible
-            cmbApplyFilter.Visible = false;
+            cmbApplyFilter.SelectedIndex = 0;
+            // Elements that appear only for the edge detection are made invisible
+            cmbEdgeDetection.Visible = false;
             btnSaveNewImage.Visible = false;
             btnGoBack.Visible = false;
-            btnApplyFilter.Visible = false;
+            btnApplyEdgeDetection.Visible = false;
 
         }
 
@@ -57,48 +57,48 @@ namespace ImageEdgeDetection
                 previewBitmap = originalBitmap.CopyToSquareCanvas(picPreview.Width);
                 picPreview.Image = previewBitmap;
 
-                ApplyEdgeDetection(true);
-                //Since there is an image, it is possible to go to the filters, so the corresponding button appears
-                btnApplyFilter.Visible = true;
+                ApplyFilter(true);
+                //Since there is an image, it is possible to go to the edge detection, so the corresponding button appears
+                btnApplyEdgeDetection.Visible = true;
             }
         }
 
-        //Button to go to the color filters
-        private void btnApplyFilter_Click(object sender, EventArgs e)
+        //Button to go to the edge detection
+        private void btnApplyEdgeDetection_Click(object sender, EventArgs e)
         {
-            //EdgeDetection applied is saved and passed further
-            ApplyEdgeDetection(false);
+            //Filter applied is saved and passed further
+            ApplyFilter(false);
 
             //We change the elements usable by making them visible or invisible
-            cmbEdgeDetection.Visible = false;
-            cmbApplyFilter.Visible = true;
-            btnApplyFilter.Visible = false;
+            cmbEdgeDetection.Visible = true;
+            cmbApplyFilter.Visible = false;
+            btnApplyEdgeDetection.Visible = false;
             btnGoBack.Visible = true;
             btnOpenOriginal.Visible = false;
             btnSaveNewImage.Visible = true;
-            cmbApplyFilter.SelectedIndex = 0;
+            cmbEdgeDetection.SelectedIndex = 0;
             //For the ValueChangedEventHandler
-            edge = false;
+            edge = true;
         }
 
-        //Button to go back to edge detection from filters
+        //Button to go back to filters from edge detection
         private void btnGoBack_Click(object sender, EventArgs e)
         {
             //We change the elements usable by making them visible or invisible
-            ApplyEdgeDetection(true);
-            cmbEdgeDetection.Visible = true;
-            cmbApplyFilter.Visible = false;
-            btnApplyFilter.Visible = true;
+            ApplyFilter(true);
+            cmbEdgeDetection.Visible = false;
+            cmbApplyFilter.Visible = true;
+            btnApplyEdgeDetection.Visible = true;
             btnGoBack.Visible = false;
             btnOpenOriginal.Visible = true;
             btnSaveNewImage.Visible = false;
-            edge = true;
+            edge = false;
         }
 
         //Button for saving image (original method)
         private void btnSaveNewImage_Click(object sender, EventArgs e)
         {
-            ApplyFilter(false);
+            ApplyEdgeDetection(false);
 
             if (resultBitmap != null)
             {
@@ -134,24 +134,24 @@ namespace ImageEdgeDetection
         //Application of edge detection (mainly original method)
         private void ApplyEdgeDetection(bool preview)
         {
-            if (previewBitmap == null || cmbEdgeDetection.SelectedIndex == -1)
+            if (cmbEdgeDetection.SelectedIndex == -1)
             {
                 return;
             }
 
-            Bitmap selectedSource = previewBitmap;
-            Bitmap bitmapResult = null;
+            Bitmap imageForEdgeDetection = previewBitmap;
+            Bitmap bitmapResultEdge = null;
 
             if (preview == true)
             {
-                selectedSource = previewBitmap;
+                imageForEdgeDetection = previewModifiedFilter;
             }
             else
             {
-                selectedSource = originalBitmap;
+                imageForEdgeDetection = resultBitmap;
             }
 
-            if (selectedSource != null)
+            if (imageForEdgeDetection != null)
             {
                 String edgeDetectionSelected = cmbEdgeDetection.SelectedItem.ToString();
 
@@ -159,91 +159,92 @@ namespace ImageEdgeDetection
                 switch (edgeDetectionSelected)
                 {
                     case "None":
-                        bitmapResult = selectedSource;
+                        bitmapResultEdge = imageForEdgeDetection;
                         break;
 
                     case "Laplacian 3x3":
-                        bitmapResult = selectedSource.Laplacian3x3Filter(false);
+                        bitmapResultEdge = imageForEdgeDetection.Laplacian3x3Filter(false);
                         break;
 
                     case "Laplacian 3x3 Grayscale":
-                        bitmapResult = selectedSource.Laplacian3x3Filter(true);
+                        bitmapResultEdge = imageForEdgeDetection.Laplacian3x3Filter(true);
                         break;
 
                     case "Laplacian 5x5":
-                        bitmapResult = selectedSource.Laplacian5x5Filter(false);
+                        bitmapResultEdge = imageForEdgeDetection.Laplacian5x5Filter(false);
                         break;
 
                     case "Laplacian 5x5 Grayscale":
-                        bitmapResult = selectedSource.Laplacian5x5Filter(true);
+                        bitmapResultEdge = imageForEdgeDetection.Laplacian5x5Filter(true);
                         break;
 
                     case "Laplacian of Gaussian":
-                        bitmapResult = selectedSource.LaplacianOfGaussianFilter();
+                        bitmapResultEdge = imageForEdgeDetection.LaplacianOfGaussianFilter();
                         break;
 
                     case "Laplacian 3x3 of Gaussian 3x3":
-                        bitmapResult = selectedSource.Laplacian3x3OfGaussian3x3Filter();
+                        bitmapResultEdge = imageForEdgeDetection.Laplacian3x3OfGaussian3x3Filter();
                         break;
 
                     case "Laplacian 3x3 of Gaussian 5x5 - 1":
-                        bitmapResult = selectedSource.Laplacian3x3OfGaussian5x5Filter1();
+                        bitmapResultEdge = imageForEdgeDetection.Laplacian3x3OfGaussian5x5Filter1();
                         break;
 
                     case "Laplacian 3x3 of Gaussian 5x5 - 2":
-                        bitmapResult = selectedSource.Laplacian3x3OfGaussian5x5Filter2();
+                        bitmapResultEdge = imageForEdgeDetection.Laplacian3x3OfGaussian5x5Filter2();
                         break;
 
                     case "Laplacian 5x5 of Gaussian 3x3":
-                        bitmapResult = selectedSource.Laplacian5x5OfGaussian3x3Filter();
+                        bitmapResultEdge = imageForEdgeDetection.Laplacian5x5OfGaussian3x3Filter();
                         break;
 
                     case "Laplacian 5x5 of Gaussian 5x5 - 1":
-                        bitmapResult = selectedSource.Laplacian5x5OfGaussian5x5Filter1();
+                        bitmapResultEdge = imageForEdgeDetection.Laplacian5x5OfGaussian5x5Filter1();
                         break;
 
                     case "Laplacian 5x5 of Gaussian 5x5 - 2":
-                        bitmapResult = selectedSource.Laplacian5x5OfGaussian5x5Filter2();
+                        bitmapResultEdge = imageForEdgeDetection.Laplacian5x5OfGaussian5x5Filter2();
                         break;
 
                     case "Sobel 3x3":
-                        bitmapResult = selectedSource.Sobel3x3Filter(false);
+                        bitmapResultEdge = imageForEdgeDetection.Sobel3x3Filter(false);
                         break;
 
                     case "Sobel 3x3 Grayscale":
-                        bitmapResult = selectedSource.Sobel3x3Filter();
+                        bitmapResultEdge = imageForEdgeDetection.Sobel3x3Filter();
                         break;
 
                     case "Prewitt":
-                        bitmapResult = selectedSource.PrewittFilter(false);
+                        bitmapResultEdge = imageForEdgeDetection.PrewittFilter(false);
                         break;
 
                     case "Prewitt Grayscale":
-                        bitmapResult = selectedSource.PrewittFilter();
+                        bitmapResultEdge = imageForEdgeDetection.PrewittFilter();
                         break;
 
                     case "Kirsch":
-                        bitmapResult = selectedSource.KirschFilter(false);
+                        bitmapResultEdge = imageForEdgeDetection.KirschFilter(false);
                         break;
 
                     case "Kirsch Grayscale":
-                        bitmapResult = selectedSource.KirschFilter();
+                        bitmapResultEdge = imageForEdgeDetection.KirschFilter();
                         break;
                 }
 
             }
 
-            if (bitmapResult != null)
+            if (bitmapResultEdge != null)
             {
+                //If it is a preview the result is shown in the application
                 if (preview == true)
                 {
-                    picPreview.Image = bitmapResult;
+                    picPreview.Image = bitmapResultEdge;
                 }
+                //If not, it means that it will be saved as the final result
                 else
                 {
-                    resultBitmap = bitmapResult;
-                    //Used to store the preview in the filter phase, to avoid loss of preview quality
-                    previewModifiedEdge = (Bitmap)picPreview.Image;
+                    resultBitmap = bitmapResultEdge;
+                    
                 }
             }
         }
@@ -251,23 +252,24 @@ namespace ImageEdgeDetection
         //Second part dedicated to the filters
         private void ApplyFilter(bool preview)
         {
-            Bitmap imageToFilter = null;
-            Bitmap bitmapResultFilter = null;
 
-            if (cmbApplyFilter.SelectedIndex == -1)
+            if (previewBitmap == null || cmbApplyFilter.SelectedIndex == -1)
             {
                 return;
             }
 
+            Bitmap imageToFilter = null;
+            Bitmap bitmapResultFilter = null;
+
             //If the image is previewed we work on the preview image
             if (preview == true)
             {
-                imageToFilter = previewModifiedEdge;
+                imageToFilter = previewBitmap;
             }
             //Else we work on the original image that was (or not) modified by edge detection
             else
             {
-                imageToFilter = resultBitmap;
+                imageToFilter = originalBitmap;
             }
 
             //The filter to apply is selected from the dropdownlist
@@ -295,7 +297,7 @@ namespace ImageEdgeDetection
                     bitmapResultFilter = imageToFilter.ZenFilter();
                     break;
 
-                case "Black and White":        
+                case "Black and White":
                     bitmapResultFilter = imageToFilter.BlackNWhite();
                     break;
 
@@ -338,10 +340,12 @@ namespace ImageEdgeDetection
                 {
                     picPreview.Image = bitmapResultFilter;
                 }
-                //If not, it means that it will be saved as the final result
+                //If not, it means that it will be passed to the edge detection
                 else
                 {
                     resultBitmap = bitmapResultFilter;
+                    //Used to store the preview in the edge detection phase, to avoid loss of preview quality
+                    previewModifiedFilter = (Bitmap)picPreview.Image;
                 }
             }
         }
