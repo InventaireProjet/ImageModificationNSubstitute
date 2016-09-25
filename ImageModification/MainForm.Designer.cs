@@ -33,7 +33,7 @@ namespace ImageEdgeDetection
             this.picPreview = new System.Windows.Forms.PictureBox();
             this.btnOpenOriginal = new System.Windows.Forms.Button();
             this.btnApplyFilter = new System.Windows.Forms.Button();
-            this.btnResetAll = new System.Windows.Forms.Button();
+            this.btnGoBack = new System.Windows.Forms.Button();
             this.btnSaveNewImage = new System.Windows.Forms.Button();
             this.cmbEdgeDetection = new System.Windows.Forms.ComboBox();
             this.cmbApplyFilter = new System.Windows.Forms.ComboBox();
@@ -58,7 +58,7 @@ namespace ImageEdgeDetection
             this.btnOpenOriginal.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOpenOriginal.Location = new System.Drawing.Point(12, 618);
             this.btnOpenOriginal.Name = "btnOpenOriginal";
-            this.btnOpenOriginal.Size = new System.Drawing.Size(150, 46);
+            this.btnOpenOriginal.Size = new System.Drawing.Size(145, 46);
             this.btnOpenOriginal.TabIndex = 15;
             this.btnOpenOriginal.Text = "Load Image";
             this.btnOpenOriginal.UseVisualStyleBackColor = true;
@@ -68,32 +68,32 @@ namespace ImageEdgeDetection
             // btnApplyFilter
             // 
             this.btnApplyFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnApplyFilter.Location = new System.Drawing.Point(462, 618);
+            this.btnApplyFilter.Location = new System.Drawing.Point(472, 618);
             this.btnApplyFilter.Name = "btnApplyFilter";
-            this.btnApplyFilter.Size = new System.Drawing.Size(150, 46);
+            this.btnApplyFilter.Size = new System.Drawing.Size(145, 46);
             this.btnApplyFilter.TabIndex = 16;
             this.btnApplyFilter.Text = "Go to filters";
             this.btnApplyFilter.UseVisualStyleBackColor = true;
             this.btnApplyFilter.Click += new System.EventHandler(this.btnApplyFilter_Click);
             // 
-            // btnResetAll
+            // btnGoBack
             // 
-            this.btnResetAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnResetAll.Location = new System.Drawing.Point(12, 618);
-            this.btnResetAll.Name = "btnResetAll";
-            this.btnResetAll.Size = new System.Drawing.Size(150, 46);
-            this.btnResetAll.TabIndex = 16;
-            this.btnResetAll.Text = "Reset";
-            this.btnResetAll.UseVisualStyleBackColor = true;
-            this.btnResetAll.Click += new System.EventHandler(this.btnResetAll_Click);
+            this.btnGoBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGoBack.Location = new System.Drawing.Point(12, 618);
+            this.btnGoBack.Name = "btnGoBack";
+            this.btnGoBack.Size = new System.Drawing.Size(145, 46);
+            this.btnGoBack.TabIndex = 16;
+            this.btnGoBack.Text = "Go back";
+            this.btnGoBack.UseVisualStyleBackColor = true;
+            this.btnGoBack.Click += new System.EventHandler(this.btnGoBack_Click);
             // 
 
             // btnSaveNewImage
             // 
             this.btnSaveNewImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveNewImage.Location = new System.Drawing.Point(462, 618);
+            this.btnSaveNewImage.Location = new System.Drawing.Point(472, 618);
             this.btnSaveNewImage.Name = "btnSaveNewImage";
-            this.btnSaveNewImage.Size = new System.Drawing.Size(150, 46);
+            this.btnSaveNewImage.Size = new System.Drawing.Size(145, 46);
             this.btnSaveNewImage.TabIndex = 17;
             this.btnSaveNewImage.Text = "Save Image";
             this.btnSaveNewImage.UseVisualStyleBackColor = true;
@@ -123,9 +123,9 @@ namespace ImageEdgeDetection
             "Prewitt Grayscale",
             "Kirsch",
             "Kirsch Grayscale"});
-            this.cmbEdgeDetection.Location = new System.Drawing.Point(168, 627);
+            this.cmbEdgeDetection.Location = new System.Drawing.Point(162, 627);
             this.cmbEdgeDetection.Name = "cmbEdgeDetection";
-            this.cmbEdgeDetection.Size = new System.Drawing.Size(288, 32);
+            this.cmbEdgeDetection.Size = new System.Drawing.Size(305, 30);
             this.cmbEdgeDetection.TabIndex = 20;
             this.cmbEdgeDetection.SelectedIndexChanged += new System.EventHandler(this.NeighbourCountValueChangedEventHandler);
             // 
@@ -148,9 +148,9 @@ namespace ImageEdgeDetection
             "Mega Filter Pink",
             "Mega Filter Custom",
             "Rainbow Filter"});
-            this.cmbApplyFilter.Location = new System.Drawing.Point(168, 627);
+            this.cmbApplyFilter.Location = new System.Drawing.Point(162, 627);
             this.cmbApplyFilter.Name = "cmbApplyFilter";
-            this.cmbApplyFilter.Size = new System.Drawing.Size(288, 32);
+            this.cmbApplyFilter.Size = new System.Drawing.Size(305, 30);
             this.cmbApplyFilter.TabIndex = 20;
             this.cmbApplyFilter.SelectedIndexChanged += new System.EventHandler(this.NeighbourCountValueChangedEventHandler);
             // 
@@ -161,7 +161,7 @@ namespace ImageEdgeDetection
             this.Controls.Add(this.cmbEdgeDetection);
             this.Controls.Add(this.cmbApplyFilter);
             this.Controls.Add(this.btnApplyFilter);
-            this.Controls.Add(this.btnResetAll);
+            this.Controls.Add(this.btnGoBack);
             this.Controls.Add(this.btnSaveNewImage);
             this.Controls.Add(this.btnOpenOriginal);
             this.Controls.Add(this.picPreview);
@@ -177,14 +177,14 @@ namespace ImageEdgeDetection
 
         }
 
-      
+
 
         #endregion
 
         private System.Windows.Forms.PictureBox picPreview;
         private System.Windows.Forms.Button btnOpenOriginal;
         private System.Windows.Forms.Button btnApplyFilter;
-        private System.Windows.Forms.Button btnResetAll;
+        private System.Windows.Forms.Button btnGoBack;
         private System.Windows.Forms.Button btnSaveNewImage;
         private System.Windows.Forms.ComboBox cmbEdgeDetection;
         //Ajout d'une combobox pour les filtres

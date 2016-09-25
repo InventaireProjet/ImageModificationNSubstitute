@@ -491,7 +491,7 @@ namespace ImageEdgeDetection
         }
 
 
-        /*
+        /* TODO IMPLEMENT THE METHODS FOR THE LAST FILTERS !!!
 
         private void megafilgreen(object sender, EventArgs e)
         {
