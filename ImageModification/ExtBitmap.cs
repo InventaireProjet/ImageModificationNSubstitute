@@ -439,6 +439,8 @@ namespace ImageEdgeDetection
             return resultBitmap;
         }
 
+        //Addition of color filters based on Pixel_Manipulation software
+
         public static Bitmap NightFilter(this Bitmap sourceBitmap)
         {
             Bitmap resultBitmap = ImageFilters.ApplyFilter(sourceBitmap, 1, 1, 1, 25);

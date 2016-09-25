@@ -22,12 +22,7 @@ namespace ImageEdgeDetection
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
+     
         private void InitializeComponent()
         {
             this.picPreview = new System.Windows.Forms.PictureBox();
@@ -98,6 +93,7 @@ namespace ImageEdgeDetection
             this.btnSaveNewImage.Text = "Save Image";
             this.btnSaveNewImage.UseVisualStyleBackColor = true;
             this.btnSaveNewImage.Click += new System.EventHandler(this.btnSaveNewImage_Click);
+
             // 
             // cmbEdgeDetection - creation of a dropdownlist to detect edges
             // 
@@ -128,8 +124,9 @@ namespace ImageEdgeDetection
             this.cmbEdgeDetection.Size = new System.Drawing.Size(305, 30);
             this.cmbEdgeDetection.TabIndex = 20;
             this.cmbEdgeDetection.SelectedIndexChanged += new System.EventHandler(this.NeighbourCountValueChangedEventHandler);
+
             // 
-            // cmbApplyFilter - creation of a dropdownlist to appy filters
+            // cmbApplyFilter - creation of a dropdownlist to apply filters
             // 
             this.cmbApplyFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbApplyFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -177,9 +174,7 @@ namespace ImageEdgeDetection
 
         }
 
-
-
-        #endregion
+        
 
         private System.Windows.Forms.PictureBox picPreview;
         private System.Windows.Forms.Button btnOpenOriginal;
@@ -187,7 +182,6 @@ namespace ImageEdgeDetection
         private System.Windows.Forms.Button btnGoBack;
         private System.Windows.Forms.Button btnSaveNewImage;
         private System.Windows.Forms.ComboBox cmbEdgeDetection;
-        //Ajout d'une combobox pour les filtres
         private System.Windows.Forms.ComboBox cmbApplyFilter;
     }
 }

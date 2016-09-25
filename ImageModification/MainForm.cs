@@ -21,7 +21,7 @@ namespace ImageEdgeDetection
     {
         private Bitmap originalBitmap = null;
         private Bitmap previewBitmap = null;
-        //Variable used to store the image preview after its modification by an edge filter
+        //Variable previewModifiedFilter used to store the image preview after its modification by a filter
         private Bitmap previewModifiedFilter = null;
         private Bitmap resultBitmap = null;
         //Boolean used to distinguish if the user is applying edge filters (edge = true) or color filters, used by the ValueChangedEventHandler
@@ -32,6 +32,7 @@ namespace ImageEdgeDetection
             InitializeComponent();
 
             cmbApplyFilter.SelectedIndex = 0;
+
             // Elements that appear only for the edge detection are made invisible
             cmbEdgeDetection.Visible = false;
             btnSaveNewImage.Visible = false;
@@ -58,6 +59,7 @@ namespace ImageEdgeDetection
                 picPreview.Image = previewBitmap;
 
                 ApplyFilter(true);
+
                 //Since there is an image, it is possible to go to the edge detection, so the corresponding button appears
                 btnApplyEdgeDetection.Visible = true;
             }
@@ -70,13 +72,14 @@ namespace ImageEdgeDetection
             ApplyFilter(false);
 
             //We change the elements usable by making them visible or invisible
-            cmbEdgeDetection.Visible = true;
             cmbApplyFilter.Visible = false;
             btnApplyEdgeDetection.Visible = false;
-            btnGoBack.Visible = true;
             btnOpenOriginal.Visible = false;
+            btnGoBack.Visible = true;
             btnSaveNewImage.Visible = true;
+            cmbEdgeDetection.Visible = true;
             cmbEdgeDetection.SelectedIndex = 0;
+
             //For the ValueChangedEventHandler
             edge = true;
         }
@@ -87,11 +90,13 @@ namespace ImageEdgeDetection
             //We change the elements usable by making them visible or invisible
             ApplyFilter(true);
             cmbEdgeDetection.Visible = false;
+            btnGoBack.Visible = false;
+            btnSaveNewImage.Visible = false;
             cmbApplyFilter.Visible = true;
             btnApplyEdgeDetection.Visible = true;
-            btnGoBack.Visible = false;
             btnOpenOriginal.Visible = true;
-            btnSaveNewImage.Visible = false;
+
+            //For the ValueChangedEventHandler
             edge = false;
         }
 
@@ -245,93 +250,92 @@ namespace ImageEdgeDetection
 
             if (preview == true)
             {
+                //If it is for the preview, we work on the preview image
                 imageForEdgeDetection = previewModifiedFilter;
             }
             else
             {
+                //If the image is going to be saved, it is the original image filtered that is modified
                 imageForEdgeDetection = resultBitmap;
             }
 
-            if (imageForEdgeDetection != null)
+
+            //The filter to apply is selected from the dropdownlist
+            String edgeDetectionSelected = cmbEdgeDetection.SelectedItem.ToString();
+
+            switch (edgeDetectionSelected)
             {
-                String edgeDetectionSelected = cmbEdgeDetection.SelectedItem.ToString();
+                case "None":
+                    bitmapResultEdge = imageForEdgeDetection;
+                    break;
 
+                case "Laplacian 3x3":
+                    bitmapResultEdge = imageForEdgeDetection.Laplacian3x3Filter(false);
+                    break;
 
-                switch (edgeDetectionSelected)
-                {
-                    case "None":
-                        bitmapResultEdge = imageForEdgeDetection;
-                        break;
+                case "Laplacian 3x3 Grayscale":
+                    bitmapResultEdge = imageForEdgeDetection.Laplacian3x3Filter(true);
+                    break;
 
-                    case "Laplacian 3x3":
-                        bitmapResultEdge = imageForEdgeDetection.Laplacian3x3Filter(false);
-                        break;
+                case "Laplacian 5x5":
+                    bitmapResultEdge = imageForEdgeDetection.Laplacian5x5Filter(false);
+                    break;
 
-                    case "Laplacian 3x3 Grayscale":
-                        bitmapResultEdge = imageForEdgeDetection.Laplacian3x3Filter(true);
-                        break;
+                case "Laplacian 5x5 Grayscale":
+                    bitmapResultEdge = imageForEdgeDetection.Laplacian5x5Filter(true);
+                    break;
 
-                    case "Laplacian 5x5":
-                        bitmapResultEdge = imageForEdgeDetection.Laplacian5x5Filter(false);
-                        break;
+                case "Laplacian of Gaussian":
+                    bitmapResultEdge = imageForEdgeDetection.LaplacianOfGaussianFilter();
+                    break;
 
-                    case "Laplacian 5x5 Grayscale":
-                        bitmapResultEdge = imageForEdgeDetection.Laplacian5x5Filter(true);
-                        break;
+                case "Laplacian 3x3 of Gaussian 3x3":
+                    bitmapResultEdge = imageForEdgeDetection.Laplacian3x3OfGaussian3x3Filter();
+                    break;
 
-                    case "Laplacian of Gaussian":
-                        bitmapResultEdge = imageForEdgeDetection.LaplacianOfGaussianFilter();
-                        break;
+                case "Laplacian 3x3 of Gaussian 5x5 - 1":
+                    bitmapResultEdge = imageForEdgeDetection.Laplacian3x3OfGaussian5x5Filter1();
+                    break;
 
-                    case "Laplacian 3x3 of Gaussian 3x3":
-                        bitmapResultEdge = imageForEdgeDetection.Laplacian3x3OfGaussian3x3Filter();
-                        break;
+                case "Laplacian 3x3 of Gaussian 5x5 - 2":
+                    bitmapResultEdge = imageForEdgeDetection.Laplacian3x3OfGaussian5x5Filter2();
+                    break;
 
-                    case "Laplacian 3x3 of Gaussian 5x5 - 1":
-                        bitmapResultEdge = imageForEdgeDetection.Laplacian3x3OfGaussian5x5Filter1();
-                        break;
+                case "Laplacian 5x5 of Gaussian 3x3":
+                    bitmapResultEdge = imageForEdgeDetection.Laplacian5x5OfGaussian3x3Filter();
+                    break;
 
-                    case "Laplacian 3x3 of Gaussian 5x5 - 2":
-                        bitmapResultEdge = imageForEdgeDetection.Laplacian3x3OfGaussian5x5Filter2();
-                        break;
+                case "Laplacian 5x5 of Gaussian 5x5 - 1":
+                    bitmapResultEdge = imageForEdgeDetection.Laplacian5x5OfGaussian5x5Filter1();
+                    break;
 
-                    case "Laplacian 5x5 of Gaussian 3x3":
-                        bitmapResultEdge = imageForEdgeDetection.Laplacian5x5OfGaussian3x3Filter();
-                        break;
+                case "Laplacian 5x5 of Gaussian 5x5 - 2":
+                    bitmapResultEdge = imageForEdgeDetection.Laplacian5x5OfGaussian5x5Filter2();
+                    break;
 
-                    case "Laplacian 5x5 of Gaussian 5x5 - 1":
-                        bitmapResultEdge = imageForEdgeDetection.Laplacian5x5OfGaussian5x5Filter1();
-                        break;
+                case "Sobel 3x3":
+                    bitmapResultEdge = imageForEdgeDetection.Sobel3x3Filter(false);
+                    break;
 
-                    case "Laplacian 5x5 of Gaussian 5x5 - 2":
-                        bitmapResultEdge = imageForEdgeDetection.Laplacian5x5OfGaussian5x5Filter2();
-                        break;
+                case "Sobel 3x3 Grayscale":
+                    bitmapResultEdge = imageForEdgeDetection.Sobel3x3Filter();
+                    break;
 
-                    case "Sobel 3x3":
-                        bitmapResultEdge = imageForEdgeDetection.Sobel3x3Filter(false);
-                        break;
+                case "Prewitt":
+                    bitmapResultEdge = imageForEdgeDetection.PrewittFilter(false);
+                    break;
 
-                    case "Sobel 3x3 Grayscale":
-                        bitmapResultEdge = imageForEdgeDetection.Sobel3x3Filter();
-                        break;
+                case "Prewitt Grayscale":
+                    bitmapResultEdge = imageForEdgeDetection.PrewittFilter();
+                    break;
 
-                    case "Prewitt":
-                        bitmapResultEdge = imageForEdgeDetection.PrewittFilter(false);
-                        break;
+                case "Kirsch":
+                    bitmapResultEdge = imageForEdgeDetection.KirschFilter(false);
+                    break;
 
-                    case "Prewitt Grayscale":
-                        bitmapResultEdge = imageForEdgeDetection.PrewittFilter();
-                        break;
-
-                    case "Kirsch":
-                        bitmapResultEdge = imageForEdgeDetection.KirschFilter(false);
-                        break;
-
-                    case "Kirsch Grayscale":
-                        bitmapResultEdge = imageForEdgeDetection.KirschFilter();
-                        break;
-                }
-
+                case "Kirsch Grayscale":
+                    bitmapResultEdge = imageForEdgeDetection.KirschFilter();
+                    break;
             }
 
             if (bitmapResultEdge != null)

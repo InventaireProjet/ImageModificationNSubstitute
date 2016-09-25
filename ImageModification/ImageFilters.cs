@@ -66,7 +66,7 @@ namespace ImageEdgeDetection
         }
 
         /*black and white filter
-        I had to change this method because it was returning bmp (so the original image was permanently changed) instead of temp , 
+        Modified by Zappellaz Nancy & Mabillard Julien: We had to change this method because it was returning bmp (so the original image was permanently changed) instead of temp , 
         moreover the variable was written with a capital letter...*/
         public static Bitmap BlackWhite(Bitmap bmp)
         {
