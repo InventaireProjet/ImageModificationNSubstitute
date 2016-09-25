@@ -131,6 +131,107 @@ namespace ImageEdgeDetection
             }
         }
 
+        //First part dedicated to the filters
+        private void ApplyFilter(bool preview)
+        {
+
+            if (previewBitmap == null || cmbApplyFilter.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            Bitmap imageToFilter = null;
+            Bitmap bitmapResultFilter = null;
+
+            //If the image is previewed we work on the preview image
+            if (preview == true)
+            {
+                imageToFilter = previewBitmap;
+            }
+            //Else we work on the original image 
+            else
+            {
+                imageToFilter = originalBitmap;
+            }
+
+            //The filter to apply is selected from the dropdownlist
+            String filterSelected = cmbApplyFilter.SelectedItem.ToString();
+
+            switch (filterSelected)
+            {
+                case "None":
+                    bitmapResultFilter = imageToFilter;
+                    break;
+
+                case "Night Filter":
+                    bitmapResultFilter = imageToFilter.NightFilter();
+                    break;
+
+                case "Hell Filter":
+                    bitmapResultFilter = imageToFilter.HellFilter();
+                    break;
+
+                case "Miami Filter":
+                    bitmapResultFilter = imageToFilter.MiamiFilter();
+                    break;
+
+                case "Zen Filter":
+                    bitmapResultFilter = imageToFilter.ZenFilter();
+                    break;
+
+                case "Black and White":
+                    bitmapResultFilter = imageToFilter.BlackNWhite();
+                    break;
+
+                case "Swap Filter":
+                    bitmapResultFilter = imageToFilter.SwapFilter();
+                    break;
+
+                case "Crazy Filter":
+                    bitmapResultFilter = imageToFilter.CrazyFilter();
+                    break;
+                //TODO CHANGES FROME HERE TO THE END OF THE SWITCH CASE !!
+                case "Mega Filter Green":
+
+                    bitmapResultFilter = imageToFilter.Laplacian3x3OfGaussian5x5Filter2();
+                    break;
+
+                case "Mega Filter Orange":
+                    bitmapResultFilter = imageToFilter.Laplacian5x5OfGaussian3x3Filter();
+                    break;
+
+                case "Mega Filter Pink":
+                    bitmapResultFilter = imageToFilter.Laplacian5x5OfGaussian5x5Filter1();
+                    break;
+
+                case "Mega Filter Custom":
+
+                    bitmapResultFilter = imageToFilter.Laplacian5x5OfGaussian5x5Filter2();
+                    break;
+
+                case "Rainbow Filter":
+                    bitmapResultFilter = imageToFilter.Sobel3x3Filter(false);
+                    break;
+            }
+
+
+            if (bitmapResultFilter != null)
+            {
+                //If it is a preview the result is shown in the application
+                if (preview == true)
+                {
+                    picPreview.Image = bitmapResultFilter;
+                }
+                //If not, it means that it will be passed to the edge detection
+                else
+                {
+                    resultBitmap = bitmapResultFilter;
+                    //Used to store the preview in the next phase (edge detection), to avoid loss of preview quality
+                    previewModifiedFilter = (Bitmap)picPreview.Image;
+                }
+            }
+        }
+
         //Application of edge detection (mainly original method)
         private void ApplyEdgeDetection(bool preview)
         {
@@ -139,7 +240,7 @@ namespace ImageEdgeDetection
                 return;
             }
 
-            Bitmap imageForEdgeDetection = previewBitmap;
+            Bitmap imageForEdgeDetection = null;
             Bitmap bitmapResultEdge = null;
 
             if (preview == true)
@@ -244,111 +345,12 @@ namespace ImageEdgeDetection
                 else
                 {
                     resultBitmap = bitmapResultEdge;
-                    
+
                 }
             }
         }
 
-        //Second part dedicated to the filters
-        private void ApplyFilter(bool preview)
-        {
 
-            if (previewBitmap == null || cmbApplyFilter.SelectedIndex == -1)
-            {
-                return;
-            }
-
-            Bitmap imageToFilter = null;
-            Bitmap bitmapResultFilter = null;
-
-            //If the image is previewed we work on the preview image
-            if (preview == true)
-            {
-                imageToFilter = previewBitmap;
-            }
-            //Else we work on the original image that was (or not) modified by edge detection
-            else
-            {
-                imageToFilter = originalBitmap;
-            }
-
-            //The filter to apply is selected from the dropdownlist
-            String filterSelected = cmbApplyFilter.SelectedItem.ToString();
-
-            switch (filterSelected)
-            {
-                case "None":
-                    bitmapResultFilter = imageToFilter;
-                    break;
-
-                case "Night Filter":
-                    bitmapResultFilter = imageToFilter.NightFilter();
-                    break;
-
-                case "Hell Filter":
-                    bitmapResultFilter = imageToFilter.HellFilter();
-                    break;
-
-                case "Miami Filter":
-                    bitmapResultFilter = imageToFilter.MiamiFilter();
-                    break;
-
-                case "Zen Filter":
-                    bitmapResultFilter = imageToFilter.ZenFilter();
-                    break;
-
-                case "Black and White":
-                    bitmapResultFilter = imageToFilter.BlackNWhite();
-                    break;
-
-                case "Swap Filter":
-                    bitmapResultFilter = imageToFilter.SwapFilter();
-                    break;
-
-                case "Crazy Filter":
-                    bitmapResultFilter = imageToFilter.CrazyFilter();
-                    break;
-
-                case "Mega Filter Green":
-                    //TODO CHANGES FROME HERE TO THE END OF THE SWITCH CASE !!
-                    bitmapResultFilter = imageToFilter.Laplacian3x3OfGaussian5x5Filter2();
-                    break;
-
-                case "Mega Filter Orange":
-                    bitmapResultFilter = imageToFilter.Laplacian5x5OfGaussian3x3Filter();
-                    break;
-
-                case "Mega Filter Pink":
-                    bitmapResultFilter = imageToFilter.Laplacian5x5OfGaussian5x5Filter1();
-                    break;
-
-                case "Mega Filter Custom":
-
-                    bitmapResultFilter = imageToFilter.Laplacian5x5OfGaussian5x5Filter2();
-                    break;
-
-                case "Rainbow Filter":
-                    bitmapResultFilter = imageToFilter.Sobel3x3Filter(false);
-                    break;
-            }
-
-
-            if (bitmapResultFilter != null)
-            {
-                //If it is a preview the result is shown in the application
-                if (preview == true)
-                {
-                    picPreview.Image = bitmapResultFilter;
-                }
-                //If not, it means that it will be passed to the edge detection
-                else
-                {
-                    resultBitmap = bitmapResultFilter;
-                    //Used to store the preview in the edge detection phase, to avoid loss of preview quality
-                    previewModifiedFilter = (Bitmap)picPreview.Image;
-                }
-            }
-        }
 
         private void NeighbourCountValueChangedEventHandler(object sender, EventArgs e)
         {
