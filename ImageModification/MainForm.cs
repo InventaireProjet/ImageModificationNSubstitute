@@ -24,6 +24,9 @@ namespace ImageEdgeDetection
         private Bitmap previewBitmap = null;
         //Variable previewModifiedFilter used to store the image preview after its modification by a filter
         private Bitmap previewModifiedFilter = null;
+        //Variable resultFilterBitmap used to store the original image after its modification by a filter
+        private Bitmap resultFilterBitmap = null;
+        //Image to be saved at the end of the process
         private Bitmap resultBitmap = null;
         //Boolean used to distinguish if the user is applying edge filters (edge = true) or color filters, used by the ValueChangedEventHandler
         private bool edge = false;
@@ -40,6 +43,7 @@ namespace ImageEdgeDetection
 
             // Elements that appear only for the edge detection are made invisible
             cmbEdgeDetection.Visible = false;
+            cmbApplyFilter.Visible = false;
             btnSaveNewImage.Visible = false;
             btnGoBack.Visible = false;
             btnApplyEdgeDetection.Visible = false;
@@ -67,7 +71,8 @@ namespace ImageEdgeDetection
                 isOnBtnClick = false;
                 ApplyFilter(true);
 
-                //Since there is an image, it is possible to go to the edge detection, so the corresponding button appears
+                //Since there is an image, it is possible to filter it and to go to the edge detection, so the corresponding buttons appear
+                cmbApplyFilter.Visible = true;
                 btnApplyEdgeDetection.Visible = true;
             }
         }
@@ -75,6 +80,10 @@ namespace ImageEdgeDetection
         //Button to go to the edge detection
         private void btnApplyEdgeDetection_Click(object sender, EventArgs e)
         {
+
+            //For the ValueChangedEventHandler
+            edge = true;
+
             //Filter applied is saved and passed further
             isOnBtnClick = true;
             ApplyFilter(false);
@@ -88,16 +97,16 @@ namespace ImageEdgeDetection
             cmbEdgeDetection.Visible = true;
             cmbEdgeDetection.SelectedIndex = 0;
 
-            //For the ValueChangedEventHandler
-            edge = true;
+            
         }
 
         //Button to go back to filters from edge detection
         private void btnGoBack_Click(object sender, EventArgs e)
         {
-            //We change the elements usable by making them visible or invisible
-            isOnBtnClick = true;
-            ApplyFilter(true);
+            //We show the preview of the modified image by a filter
+            picPreview.Image = previewModifiedFilter;
+
+            //We change the elements usable by making them visible or invisible         
             isOnBtnClick = false;
             cmbEdgeDetection.Visible = false;
             btnGoBack.Visible = false;
@@ -137,7 +146,9 @@ namespace ImageEdgeDetection
                     }
 
                     StreamWriter streamWriter = new StreamWriter(sfd.FileName, false);
-                    resultBitmap.Save(streamWriter.BaseStream, imgFormat);
+                    //Line added to avoid an error : http://stackoverflow.com/questions/15571022/how-to-find-reason-for-generic-gdi-error-when-saving-an-image
+                    Bitmap savedImage = new Bitmap(resultBitmap);
+                    savedImage.Save(streamWriter.BaseStream, imgFormat);
                     streamWriter.Flush();
                     streamWriter.Close();
 
@@ -224,7 +235,14 @@ namespace ImageEdgeDetection
                     //Test to not open the colorDialog on click on EdgeDetection button or GoBack button
                     if (isOnBtnClick == false)
                     {
-                        OpenColorDialog();
+                        /*If OpenColorDialog is true, it means that the cancel button was clicked, 
+                         *so no change is made and the dropdownlist is reset 
+                         */
+                        if (OpenColorDialog()==true)
+                        {
+                            cmbApplyFilter.SelectedIndex = 0;
+                            return;
+                        }
                     }
 
                     bitmapResultFilter = imageToFilter.MegaFilterCustom(customColor);
@@ -248,23 +266,28 @@ namespace ImageEdgeDetection
                 //If not, it means that it will be passed to the edge detection
                 else
                 {
-                    resultBitmap = bitmapResultFilter;
+                    resultFilterBitmap = bitmapResultFilter;
                     //Used to store the preview in the next phase (edge detection), to avoid loss of preview quality
                     previewModifiedFilter = (Bitmap)picPreview.Image;
                 }
             }
         }
 
-        //Open the Dialog to choose a color
-        public void OpenColorDialog()
+        //Open the Dialog to choose a color and check if the cancel button was clicked
+        public bool OpenColorDialog()
         {
             ColorDialog CD = new ColorDialog();
+
+            //Check if the cancel button was clicked
+            bool cancel=true;
 
             if (CD.ShowDialog() == DialogResult.OK)
             {
                 Color newC = CD.Color;
                 customColor = newC;
+                cancel = false;
             }
+            return cancel;
         }
 
         //Application of edge detection (mainly original method)
@@ -286,7 +309,7 @@ namespace ImageEdgeDetection
             else
             {
                 //If the image is going to be saved, it is the original image filtered that is modified
-                imageForEdgeDetection = resultBitmap;
+                imageForEdgeDetection = resultFilterBitmap;
             }
 
 
