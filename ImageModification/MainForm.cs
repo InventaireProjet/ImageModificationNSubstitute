@@ -68,7 +68,7 @@ namespace ImageEdgeDetection
                 previewBitmap = originalBitmap.CopyToSquareCanvas(picPreview.Width);
                 picPreview.Image = previewBitmap;
 
-                isOnBtnClick = false;
+               
                 ApplyFilter(true);
 
                 //Since there is an image, it is possible to filter it and to go to the edge detection, so the corresponding buttons appear
