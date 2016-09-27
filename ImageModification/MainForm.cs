@@ -145,7 +145,7 @@ namespace ImageEdgeDetection
                 }
             }
         }
-  
+
         //First part dedicated to the filters
         private void ApplyFilter(bool preview)
         {
@@ -171,11 +171,11 @@ namespace ImageEdgeDetection
 
             //The filter to apply is selected from the dropdownlist
             String filterSelected = cmbApplyFilter.SelectedItem.ToString();
-      
+
 
             switch (filterSelected)
             {
-                case "None":
+                case "No filter chosen":
                     bitmapResultFilter = imageToFilter;
                     break;
 
@@ -225,11 +225,10 @@ namespace ImageEdgeDetection
                     if (isOnBtnClick == false)
                     {
                         OpenColorDialog();
-                        bitmapResultFilter = imageToFilter.MegaFilterCustom(customColor);
-                    }else
-                    {
-                        bitmapResultFilter = imageToFilter.MegaFilterCustom(customColor);
                     }
+
+                    bitmapResultFilter = imageToFilter.MegaFilterCustom(customColor);
+
                     break;
 
                 case "Rainbow Filter":
@@ -261,7 +260,7 @@ namespace ImageEdgeDetection
         {
             ColorDialog CD = new ColorDialog();
 
-            if(CD.ShowDialog() == DialogResult.OK)
+            if (CD.ShowDialog() == DialogResult.OK)
             {
                 Color newC = CD.Color;
                 customColor = newC;
@@ -296,7 +295,7 @@ namespace ImageEdgeDetection
 
             switch (edgeDetectionSelected)
             {
-                case "None":
+                case "No edge detection chosen":
                     bitmapResultEdge = imageForEdgeDetection;
                     break;
 
