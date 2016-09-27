@@ -492,42 +492,39 @@ namespace ImageEdgeDetection
             return resultBitmap;
         }
 
-
-        /* TODO IMPLEMENT THE METHODS FOR THE LAST FILTERS !!!
-
-        private void megafilgreen(object sender, EventArgs e)
+        public static Bitmap MegaFilterGreen(this Bitmap sourceBitmap)
         {
-            pictureBox1.Image = Origin;
             Color c = Color.Green;
-            pictureBox1.Image = ImageFilters.ApplyFilterMega(new Bitmap(pictureBox1.Image), 230, 110, c);
+            Bitmap resultBitmap = ImageFilters.ApplyFilterMega(new Bitmap(sourceBitmap), 230, 110, c);
+            return resultBitmap;
         }
 
-       
-
-        private void megafiltoran(object sender, EventArgs e)
+        public static Bitmap MegaFilterOrange(this Bitmap sourceBitmap)
         {
-            pictureBox1.Image = Origin;
             Color c = Color.Orange;
-            pictureBox1.Image = ImageFilters.ApplyFilterMega(new Bitmap(pictureBox1.Image), 230, 110, c);
+            Bitmap resultBitmap = ImageFilters.ApplyFilterMega(new Bitmap(sourceBitmap), 230, 110, c);
+            return resultBitmap;
         }
 
-        private void megafilpink(object sender, EventArgs e)
+        public static Bitmap MegaFilterPink(this Bitmap sourceBitmap)
         {
             Color c = Color.Pink;
-            pictureBox1.Image = ImageFilters.ApplyFilterMega(new Bitmap(pictureBox1.Image), 230, 110, c);
+            Bitmap resultBitmap = ImageFilters.ApplyFilterMega(new Bitmap(sourceBitmap), 230, 110, c);
+            return resultBitmap;
         }
 
-        private void megafiltcustom(object sender, EventArgs e)
+        public static Bitmap MegaFilterCustom(this Bitmap sourceBitmap, Color customColor)
         {
-            pictureBox1.Image = Origin;
-            pictureBox1.Image = ImageFilters.ApplyFilterMega(new Bitmap(pictureBox1.Image), 230, 110, SecondPicBrush);
+            Color c = customColor;
+            Bitmap resultBitmap = ImageFilters.ApplyFilterMega(new Bitmap(sourceBitmap), 230, 110, c);
+            return resultBitmap;
+        }
+        
+        public static Bitmap Rainbow(this Bitmap sourceBitmap)
+        {
+            Bitmap resultBitmap = ImageFilters.RainbowFilter(new Bitmap(sourceBitmap));
+            return resultBitmap;
         }
 
-        private void rainbow(object sender, EventArgs e)
-        {
-            pictureBox1.Image = Origin;
-            pictureBox1.Image = ImageFilters.RainbowFilter(new Bitmap(pictureBox1.Image));
-        }
-        */
     }
 }

@@ -19,6 +19,7 @@ namespace ImageEdgeDetection
 {
     public partial class MainForm : Form
     {
+
         private Bitmap originalBitmap = null;
         private Bitmap previewBitmap = null;
         //Variable previewModifiedFilter used to store the image preview after its modification by a filter
@@ -26,6 +27,10 @@ namespace ImageEdgeDetection
         private Bitmap resultBitmap = null;
         //Boolean used to distinguish if the user is applying edge filters (edge = true) or color filters, used by the ValueChangedEventHandler
         private bool edge = false;
+        //Variable used for the custom filter 
+        private Color customColor;
+        //Boolean used to not open dialogColor on click on btnGoBack and btnEdgeDetection
+        private bool isOnBtnClick = false;
 
         public MainForm()
         {
@@ -38,6 +43,7 @@ namespace ImageEdgeDetection
             btnSaveNewImage.Visible = false;
             btnGoBack.Visible = false;
             btnApplyEdgeDetection.Visible = false;
+
 
         }
 
@@ -58,6 +64,7 @@ namespace ImageEdgeDetection
                 previewBitmap = originalBitmap.CopyToSquareCanvas(picPreview.Width);
                 picPreview.Image = previewBitmap;
 
+                isOnBtnClick = false;
                 ApplyFilter(true);
 
                 //Since there is an image, it is possible to go to the edge detection, so the corresponding button appears
@@ -69,6 +76,7 @@ namespace ImageEdgeDetection
         private void btnApplyEdgeDetection_Click(object sender, EventArgs e)
         {
             //Filter applied is saved and passed further
+            isOnBtnClick = true;
             ApplyFilter(false);
 
             //We change the elements usable by making them visible or invisible
@@ -88,7 +96,9 @@ namespace ImageEdgeDetection
         private void btnGoBack_Click(object sender, EventArgs e)
         {
             //We change the elements usable by making them visible or invisible
+            isOnBtnClick = true;
             ApplyFilter(true);
+            isOnBtnClick = false;
             cmbEdgeDetection.Visible = false;
             btnGoBack.Visible = false;
             btnSaveNewImage.Visible = false;
@@ -135,7 +145,7 @@ namespace ImageEdgeDetection
                 }
             }
         }
-
+  
         //First part dedicated to the filters
         private void ApplyFilter(bool preview)
         {
@@ -161,6 +171,7 @@ namespace ImageEdgeDetection
 
             //The filter to apply is selected from the dropdownlist
             String filterSelected = cmbApplyFilter.SelectedItem.ToString();
+      
 
             switch (filterSelected)
             {
@@ -195,29 +206,37 @@ namespace ImageEdgeDetection
                 case "Crazy Filter":
                     bitmapResultFilter = imageToFilter.CrazyFilter();
                     break;
-                //TODO CHANGES FROME HERE TO THE END OF THE SWITCH CASE !!
-                case "Mega Filter Green":
 
-                    bitmapResultFilter = imageToFilter.Laplacian3x3OfGaussian5x5Filter2();
+                case "Mega Filter Green":
+                    bitmapResultFilter = imageToFilter.MegaFilterGreen();
                     break;
 
+
                 case "Mega Filter Orange":
-                    bitmapResultFilter = imageToFilter.Laplacian5x5OfGaussian3x3Filter();
+                    bitmapResultFilter = imageToFilter.MegaFilterOrange();
                     break;
 
                 case "Mega Filter Pink":
-                    bitmapResultFilter = imageToFilter.Laplacian5x5OfGaussian5x5Filter1();
+                    bitmapResultFilter = imageToFilter.MegaFilterPink();
                     break;
 
                 case "Mega Filter Custom":
-
-                    bitmapResultFilter = imageToFilter.Laplacian5x5OfGaussian5x5Filter2();
+                    //Test to not open the colorDialog on click on EdgeDetection button or GoBack button
+                    if (isOnBtnClick == false)
+                    {
+                        OpenColorDialog();
+                        bitmapResultFilter = imageToFilter.MegaFilterCustom(customColor);
+                    }else
+                    {
+                        bitmapResultFilter = imageToFilter.MegaFilterCustom(customColor);
+                    }
                     break;
 
                 case "Rainbow Filter":
-                    bitmapResultFilter = imageToFilter.Sobel3x3Filter(false);
+                    bitmapResultFilter = imageToFilter.Rainbow();
                     break;
             }
+
 
 
             if (bitmapResultFilter != null)
@@ -234,6 +253,18 @@ namespace ImageEdgeDetection
                     //Used to store the preview in the next phase (edge detection), to avoid loss of preview quality
                     previewModifiedFilter = (Bitmap)picPreview.Image;
                 }
+            }
+        }
+
+        //Open the Dialog to choose a color
+        public void OpenColorDialog()
+        {
+            ColorDialog CD = new ColorDialog();
+
+            if(CD.ShowDialog() == DialogResult.OK)
+            {
+                Color newC = CD.Color;
+                customColor = newC;
             }
         }
 

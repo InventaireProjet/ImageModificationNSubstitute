@@ -101,7 +101,7 @@ namespace ImageEdgeDetection
             this.cmbEdgeDetection.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbEdgeDetection.FormattingEnabled = true;
             this.cmbEdgeDetection.Items.AddRange(new object[] {
-            "None",
+            "No edge detection chosen",
             "Laplacian 3x3",
             "Laplacian 3x3 Grayscale",
             "Laplacian 5x5",
@@ -132,7 +132,7 @@ namespace ImageEdgeDetection
             this.cmbApplyFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbApplyFilter.FormattingEnabled = true;
             this.cmbApplyFilter.Items.AddRange(new object[] {
-            "None",
+            "No filter chosen",
             "Night Filter",
             "Hell Filter",
             "Miami Filter",
