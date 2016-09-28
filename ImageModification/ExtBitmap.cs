@@ -519,7 +519,7 @@ namespace ImageEdgeDetection
             Bitmap resultBitmap = ImageFilters.ApplyFilterMega(new Bitmap(sourceBitmap), 230, 110, c);
             return resultBitmap;
         }
-        
+
         public static Bitmap Rainbow(this Bitmap sourceBitmap)
         {
             Bitmap resultBitmap = ImageFilters.RainbowFilter(new Bitmap(sourceBitmap));

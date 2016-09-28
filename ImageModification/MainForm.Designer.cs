@@ -22,7 +22,7 @@ namespace ImageEdgeDetection
             base.Dispose(disposing);
         }
 
-     
+
         private void InitializeComponent()
         {
             this.picPreview = new System.Windows.Forms.PictureBox();
@@ -174,7 +174,7 @@ namespace ImageEdgeDetection
 
         }
 
-        
+
 
         private System.Windows.Forms.PictureBox picPreview;
         private System.Windows.Forms.Button btnOpenOriginal;

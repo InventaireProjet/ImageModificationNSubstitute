@@ -68,7 +68,7 @@ namespace ImageEdgeDetection
                 previewBitmap = originalBitmap.CopyToSquareCanvas(picPreview.Width);
                 picPreview.Image = previewBitmap;
 
-               
+
                 ApplyFilter(true);
 
                 //Since there is an image, it is possible to filter it and to go to the edge detection, so the corresponding buttons appear
@@ -97,7 +97,7 @@ namespace ImageEdgeDetection
             cmbEdgeDetection.Visible = true;
             cmbEdgeDetection.SelectedIndex = 0;
 
-            
+
         }
 
         //Button to go back to filters from edge detection
@@ -238,7 +238,7 @@ namespace ImageEdgeDetection
                         /*If OpenColorDialog is true, it means that the cancel button was clicked, 
                          *so no change is made and the dropdownlist is reset 
                          */
-                        if (OpenColorDialog()==true)
+                        if (OpenColorDialog() == true)
                         {
                             cmbApplyFilter.SelectedIndex = 0;
                             return;
@@ -279,7 +279,7 @@ namespace ImageEdgeDetection
             ColorDialog CD = new ColorDialog();
 
             //Check if the cancel button was clicked
-            bool cancel=true;
+            bool cancel = true;
 
             if (CD.ShowDialog() == DialogResult.OK)
             {

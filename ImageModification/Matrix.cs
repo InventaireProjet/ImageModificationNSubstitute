@@ -16,9 +16,9 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,]  
-                { { -1, -1, -1,  }, 
-                  { -1,  8, -1,  }, 
+                return new double[,]
+                { { -1, -1, -1,  },
+                  { -1,  8, -1,  },
                   { -1, -1, -1,  }, };
             }
         }
@@ -27,11 +27,11 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,] 
-                { { -1, -1, -1, -1, -1, }, 
-                  { -1, -1, -1, -1, -1, }, 
-                  { -1, -1, 24, -1, -1, }, 
-                  { -1, -1, -1, -1, -1, }, 
+                return new double[,]
+                { { -1, -1, -1, -1, -1, },
+                  { -1, -1, -1, -1, -1, },
+                  { -1, -1, 24, -1, -1, },
+                  { -1, -1, -1, -1, -1, },
                   { -1, -1, -1, -1, -1  }, };
             }
         }
@@ -40,9 +40,9 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,]  
-                { {  0,   0, -1,  0,  0 }, 
-                  {  0,  -1, -2, -1,  0 }, 
+                return new double[,]
+                { {  0,   0, -1,  0,  0 },
+                  {  0,  -1, -2, -1,  0 },
                   { -1,  -2, 16, -2, -1 },
                   {  0,  -1, -2, -1,  0 },
                   {  0,   0, -1,  0,  0 }, };
@@ -53,9 +53,9 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,]  
-                { { 1, 2, 1, }, 
-                  { 2, 4, 2, }, 
+                return new double[,]
+                { { 1, 2, 1, },
+                  { 2, 4, 2, },
                   { 1, 2, 1, }, };
             }
         }
@@ -64,9 +64,9 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,]  
-                { { 2, 04, 05, 04, 2 }, 
-                  { 4, 09, 12, 09, 4 }, 
+                return new double[,]
+                { { 2, 04, 05, 04, 2 },
+                  { 4, 09, 12, 09, 4 },
                   { 5, 12, 15, 12, 5 },
                   { 4, 09, 12, 09, 4 },
                   { 2, 04, 05, 04, 2 }, };
@@ -77,9 +77,9 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,] 
-                { {  1,   4,  6,  4,  1 }, 
-                  {  4,  16, 24, 16,  4 }, 
+                return new double[,]
+                { {  1,   4,  6,  4,  1 },
+                  {  4,  16, 24, 16,  4 },
                   {  6,  24, 36, 24,  6 },
                   {  4,  16, 24, 16,  4 },
                   {  1,   4,  6,  4,  1 }, };
@@ -90,9 +90,9 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,] 
-                { { -1,  0,  1, }, 
-                  { -2,  0,  2, }, 
+                return new double[,]
+                { { -1,  0,  1, },
+                  { -2,  0,  2, },
                   { -1,  0,  1, }, };
             }
         }
@@ -101,9 +101,9 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,] 
-                { {  1,  2,  1, }, 
-                  {  0,  0,  0, }, 
+                return new double[,]
+                { {  1,  2,  1, },
+                  {  0,  0,  0, },
                   { -1, -2, -1, }, };
             }
         }
@@ -112,9 +112,9 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,] 
-                { { -1,  0,  1, }, 
-                  { -1,  0,  1, }, 
+                return new double[,]
+                { { -1,  0,  1, },
+                  { -1,  0,  1, },
                   { -1,  0,  1, }, };
             }
         }
@@ -123,9 +123,9 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,] 
-                { {  1,  1,  1, }, 
-                  {  0,  0,  0, }, 
+                return new double[,]
+                { {  1,  1,  1, },
+                  {  0,  0,  0, },
                   { -1, -1, -1, }, };
             }
         }
@@ -135,9 +135,9 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,] 
-                { {  5,  5,  5, }, 
-                  { -3,  0, -3, }, 
+                return new double[,]
+                { {  5,  5,  5, },
+                  { -3,  0, -3, },
                   { -3, -3, -3, }, };
             }
         }
@@ -146,9 +146,9 @@ namespace ImageEdgeDetection
         {
             get
             {
-                return new double[,] 
-                { {  5, -3, -3, }, 
-                  {  5,  0, -3, }, 
+                return new double[,]
+                { {  5, -3, -3, },
+                  {  5,  0, -3, },
                   {  5, -3, -3, }, };
             }
         }
