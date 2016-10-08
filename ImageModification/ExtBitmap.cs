@@ -480,9 +480,15 @@ namespace ImageEdgeDetection
 
         public static Bitmap SwapFilter(this Bitmap sourceBitmap)
         {
+  
+            if (sourceBitmap == null)
+            {
+                return null;
+            }
+         
             Bitmap resultBitmap = ImageFilters.ApplyFilterSwap(sourceBitmap);
-
             return resultBitmap;
+
         }
 
         public static Bitmap CrazyFilter(this Bitmap sourceBitmap)

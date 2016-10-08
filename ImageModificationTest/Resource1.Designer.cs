@@ -63,6 +63,16 @@ namespace ImageModificationTest {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap emptyTest {
+            get {
+                object obj = ResourceManager.GetObject("emptyTest", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap filterTest {
             get {
                 object obj = ResourceManager.GetObject("filterTest", resourceCulture);
@@ -76,6 +86,16 @@ namespace ImageModificationTest {
         internal static System.Drawing.Bitmap testBeforeFilter {
             get {
                 object obj = ResourceManager.GetObject("testBeforeFilter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap testParesseux {
+            get {
+                object obj = ResourceManager.GetObject("testParesseux", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
