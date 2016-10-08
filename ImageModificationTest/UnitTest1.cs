@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ImageEdgeDetection;
 using System.IO;
 using System.Reflection;
+using System.Drawing;
 
 namespace ImageModificationTest
 {
@@ -12,8 +13,11 @@ namespace ImageModificationTest
         [TestMethod]
         public void TestMethod1()
         {
-          //  ExtBitmap.SwapFilter();
+            Bitmap imgOrigin = Resource1.testBeforeFilter;
 
+            Bitmap imgResult = ExtBitmap.ZenFilter(imgOrigin);
+
+            Assert.AreEqual(imgOrigin.Size, imgResult.Size);
 
         }
     }
