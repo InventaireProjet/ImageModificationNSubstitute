@@ -8,10 +8,10 @@ using System.Drawing;
 namespace ImageModificationTest
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTestSwapFilter
     {
         [TestMethod]
-        public void TestSizeImage()
+        public void TestSizeImageSwap()
         {
 
             Bitmap imgOrigin = Resource1.testBeforeFilter;
@@ -23,7 +23,8 @@ namespace ImageModificationTest
         }
 
          [TestMethod]
-        public void TestColorPixel()
+         //Tests that the image output corresponds to what is expected in terms of color by testing all the pixels
+        public void TestColorPixelSwap()
         {
             Bitmap imgTest = Resource1.filterTest;
             Bitmap imgResult = ExtBitmap.SwapFilter(Resource1.testBeforeFilter);
@@ -43,7 +44,8 @@ namespace ImageModificationTest
 
 
         [TestMethod]
-        public void TestEmptyImage()
+        //Tests that the method returns null if a null image is used
+        public void TestEmptyImageSwap()
         {
             Bitmap imgNull = null; 
 
@@ -52,9 +54,9 @@ namespace ImageModificationTest
         }
 
         [TestMethod]
-        public void TestWrongFormat()
+        public void TestWrongFormatSwap()
         {
-            Image corruptImage = Image.FromFile("C:\\Users\\Chacha\\Downloads\\corruptImg.jpg");
+            Image corruptImage = Image.FromFile("C:\\Users\\uadmin\\Desktop\\serveimage.jpg");
 
             Bitmap bitmapImage = new Bitmap(corruptImage);
 

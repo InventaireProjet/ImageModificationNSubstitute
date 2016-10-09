@@ -409,6 +409,12 @@ namespace ImageEdgeDetection
         public static Bitmap Sobel3x3Filter(this Bitmap sourceBitmap,
                                                 bool grayscale = true)
         {
+            //Test added to avoid the use of a null image
+            if (sourceBitmap == null)
+            {
+                return null;
+            }
+
             Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
                                                  Matrix.Sobel3x3Horizontal,
                                                    Matrix.Sobel3x3Vertical,
@@ -480,7 +486,10 @@ namespace ImageEdgeDetection
 
         public static Bitmap SwapFilter(this Bitmap sourceBitmap)
         {
-  
+
+           
+
+            //Test added to avoid the use of a null image
             if (sourceBitmap == null)
             {
                 return null;
