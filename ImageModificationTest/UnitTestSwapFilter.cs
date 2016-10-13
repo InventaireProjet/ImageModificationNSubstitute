@@ -53,15 +53,6 @@ namespace ImageModificationTest
 
         }
 
-        [TestMethod]
-        public void TestWrongFormatSwap()
-        {
-            Image corruptImage = Image.FromFile("C:\\Users\\uadmin\\Desktop\\serveimage.jpg");
-
-            Bitmap bitmapImage = new Bitmap(corruptImage);
-
-            Assert.IsNull(ExtBitmap.SwapFilter(bitmapImage));
-
-        }
+       
     }
 }
