@@ -155,18 +155,12 @@ namespace ImageEdgeDetection
 
                     if (blueTotal > 255)
                     { blueTotal = 255; }
-                    else if (blueTotal < 0)
-                    { blueTotal = 0; }
 
                     if (greenTotal > 255)
                     { greenTotal = 255; }
-                    else if (greenTotal < 0)
-                    { greenTotal = 0; }
 
                     if (redTotal > 255)
                     { redTotal = 255; }
-                    else if (redTotal < 0)
-                    { redTotal = 0; }
 
                     resultBuffer[byteOffset] = (byte)(blueTotal);
                     resultBuffer[byteOffset + 1] = (byte)(greenTotal);
@@ -192,6 +186,12 @@ namespace ImageEdgeDetection
         public static Bitmap KirschFilter(this Bitmap sourceBitmap,
                                               bool grayscale = true)
         {
+            //Test added to avoid the use of a null image
+            if (sourceBitmap == null)
+            {
+                return null;
+            }
+
             Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
                                                 Matrix.Kirsch3x3Horizontal,
                                                   Matrix.Kirsch3x3Vertical,

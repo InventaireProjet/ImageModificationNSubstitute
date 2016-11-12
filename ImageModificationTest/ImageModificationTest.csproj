@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\NSubstitute.1.10.0.0\lib\net45\NSubstitute.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
   </ItemGroup>
@@ -53,12 +57,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BusinessLayerTests.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
-    <Compile Include="UnitTestSobel3x3Filter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,26 +77,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\filterTest.png" />
+    <None Include="packages.config" />
     <None Include="Settings.aiis" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\testBeforeFilter.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\testParesseux.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\emptyTest.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\InTheArmySobel.png" />
+    <None Include="Resources\InTheArmyKirsch.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\InTheArmyOriginal.jpg" />

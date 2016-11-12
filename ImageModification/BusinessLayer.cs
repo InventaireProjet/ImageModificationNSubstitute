@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace ImageEdgeDetection
 {
-    class BusinessLayer:IClicBouton
+   public class BusinessLayer:IClicBouton
     {       
         private Bitmap originalBitmap = null;
         private Bitmap previewBitmap = null;
