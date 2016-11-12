@@ -6,6 +6,7 @@ using System.Text;
 
 namespace ImageEdgeDetection
 {
+    //Interface covering image loading
     public interface ILoadImage
     {
        Bitmap loadImage(string uri);

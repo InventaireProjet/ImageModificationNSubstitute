@@ -1,5 +1,4 @@
 ﻿
-
 namespace ImageEdgeDetection
 {
     partial class MainForm
@@ -58,7 +57,6 @@ namespace ImageEdgeDetection
 
 
 
-
             // btnSaveNewImage
             // 
             this.btnSaveNewImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -88,10 +86,7 @@ namespace ImageEdgeDetection
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-
 
         private System.Windows.Forms.PictureBox picPreview;
         private System.Windows.Forms.Button btnOpenOriginal;

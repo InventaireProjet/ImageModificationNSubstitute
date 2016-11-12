@@ -10,41 +10,16 @@ using System.Windows.Forms;
 namespace ImageEdgeDetection
 {
     class BusinessLayer:IClicBouton
-    {
-
-        private readonly ILoadImage loader;
-        private readonly ISaveImage saver;
-        private readonly IClicBouton clicker;
+    {       
         private Bitmap originalBitmap = null;
         private Bitmap previewBitmap = null;
         //Image to be saved at the end of the process
         private Bitmap resultBitmap = null;
-
-
-
-        private Bitmap LoadIOImage(string uri)
-        {
-            ILoadImage loader = new LoadImage();
-            return loader.loadImage(uri);
-        }
-
-        private Bitmap SaveIOImage(string uri)
-        {
-            ISaveImage saver = new SaveImage();
-            return saver.saveImage(uri);
-        }
-
       
-
-
-
         //Application of edge detection (mainly original method)
         private Bitmap ApplyEdgeDetection(bool preview)
         {
-
-
             Bitmap imageForEdgeDetection = null;
-            Bitmap bitmapResultEdge = null;
 
             if (preview == true)
             {
@@ -58,38 +33,31 @@ namespace ImageEdgeDetection
             }
 
             //Apply the edgeDetection 
-            bitmapResultEdge = imageForEdgeDetection.KirschFilter();
+            resultBitmap = imageForEdgeDetection.KirschFilter();
 
-
-
-            if (bitmapResultEdge != null)
-            {
-                //If it is a preview the result is shown in the application
-                if (preview == true)
-                { 
-                    resultBitmap = bitmapResultEdge;
-
-                }
-            }
-
+           
             return resultBitmap;
         }
 
+        //Manage image loading and returns the preview
         public Bitmap ImageOpening(OpenFileDialog ofd, PictureBox previewBox)
         {
+            //If ok is clicked in the presentation layer, loading starts
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                 originalBitmap=null;
 
-                originalBitmap = LoadIOImage(ofd.FileName);
+                //I/O part called through the interface managing the loading
+                ILoadImage loader = new LoadImage();
+                originalBitmap = loader.loadImage(ofd.FileName);
 
-
+                //Creation of the preview bitmap
                 previewBitmap = originalBitmap.CopyToSquareCanvas(previewBox.Width);
 
 
-                //EdgeDetection is applied by default
+                //EdgeDetection is applied and stored in the previewBox.Image variable
                 previewBox.Image = ApplyEdgeDetection(true);
-
-
+               
 
                 return (Bitmap)previewBox.Image;
             }
@@ -97,10 +65,13 @@ namespace ImageEdgeDetection
             return null;
         }
 
+        //Manage image saving and returns the image saved
         public Bitmap ImageSaving(SaveFileDialog sfd)
         {
-           Bitmap savedImage =  ApplyEdgeDetection(false);
+            //EdgeDetection is applied, the result is the image to save 
+            Bitmap savedImage =  ApplyEdgeDetection(false);
 
+            //If ok is clicked in the presentation layer, saving starts
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string fileExtension = Path.GetExtension(sfd.FileName).ToUpper();
@@ -115,12 +86,10 @@ namespace ImageEdgeDetection
                     imgFormat = ImageFormat.Jpeg;
                 }
 
-                StreamWriter streamWriter = new StreamWriter(sfd.FileName, false);
-                //Line added to avoid an error : http://stackoverflow.com/questions/15571022/how-to-find-reason-for-generic-gdi-error-when-saving-an-image
-                //Bitmap savedImage = new Bitmap(resultBitmap);
-                savedImage.Save(streamWriter.BaseStream, imgFormat);
-                streamWriter.Flush();
-                streamWriter.Close();
+                //I/O part called through the interface managing the saving
+                ISaveImage saver = new SaveImage();
+                saver.saveImage(sfd.FileName, imgFormat, savedImage);
+
 
                 return savedImage;
             }
