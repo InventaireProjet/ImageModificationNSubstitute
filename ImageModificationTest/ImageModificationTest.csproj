@@ -59,7 +59,6 @@
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
     <Compile Include="UnitTestSobel3x3Filter.cs" />
-    <Compile Include="UnitTestSwapFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

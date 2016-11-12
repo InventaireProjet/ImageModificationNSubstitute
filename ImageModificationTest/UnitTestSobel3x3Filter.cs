@@ -14,7 +14,7 @@ namespace ImageModificationTest
 
             Bitmap imgOrigin = Resource1.testBeforeFilter;
 
-            Bitmap imgResult = ExtBitmap.Sobel3x3Filter(imgOrigin);
+            Bitmap imgResult = ExtBitmap.KirschFilter(imgOrigin);
 
             Assert.AreEqual(imgOrigin.Size, imgResult.Size);
 
@@ -25,7 +25,7 @@ namespace ImageModificationTest
         public void TestColorPixelSobel()
         {
             Bitmap imgTest = Resource1.InTheArmySobel;
-            Bitmap imgResult = ExtBitmap.Sobel3x3Filter(Resource1.InTheArmyOriginal, false);
+            Bitmap imgResult = ExtBitmap.KirschFilter(Resource1.InTheArmyOriginal, false);
             for (int i = 0; i < imgTest.Width; i++)
             {
                 for (int j = 0; j < imgTest.Height; j++)
@@ -47,7 +47,7 @@ namespace ImageModificationTest
         {
             Bitmap imgNull = null;
 
-            Assert.IsNull(ExtBitmap.Sobel3x3Filter(imgNull));
+            Assert.IsNull(ExtBitmap.KirschFilter(imgNull));
 
         }
 

@@ -56,8 +56,8 @@ namespace ImageEdgeDetection
             this.btnOpenOriginal.Click += new System.EventHandler(this.btnOpenOriginal_Click);
             // 
 
-           
-         
+
+
 
             // btnSaveNewImage
             // 
@@ -70,12 +70,12 @@ namespace ImageEdgeDetection
             this.btnSaveNewImage.UseVisualStyleBackColor = true;
             this.btnSaveNewImage.Click += new System.EventHandler(this.btnSaveNewImage_Click);
 
-            
-           
+
+
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(724, 775);     
+            this.ClientSize = new System.Drawing.Size(724, 775);
             this.Controls.Add(this.btnSaveNewImage);
             this.Controls.Add(this.btnOpenOriginal);
             this.Controls.Add(this.picPreview);
