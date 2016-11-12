@@ -26,7 +26,7 @@ namespace ImageEdgeDetection
             InitializeComponent();
 
 
-            // Elements that appear only for the edge detection are made invisible
+            // Saving a new image is invisible when no image is loaded
             btnSaveNewImage.Visible = false;
 
 
@@ -49,9 +49,10 @@ namespace ImageEdgeDetection
                 previewBitmap = originalBitmap.CopyToSquareCanvas(picPreview.Width);
                 picPreview.Image = previewBitmap;
 
+                //EdgeDetection is applied by default
                 ApplyEdgeDetection(true);
 
-                //Since there is an image, it is possible to filter it and to go to the edge detection, so the corresponding buttons appear
+                //Since there is an image, it is possible to save it
                 btnSaveNewImage.Visible = true;
 
             }
@@ -113,7 +114,7 @@ namespace ImageEdgeDetection
             }
             else
             {
-                //If the image is going to be saved, it is the original image filtered that is modified
+                //If the image is going to be saved, it is the original that is modified
                 imageForEdgeDetection = originalBitmap;
             }
 
@@ -137,10 +138,6 @@ namespace ImageEdgeDetection
                 }
             }
         }
-
-
-
-
 
         private void MainForm_Load(object sender, EventArgs e)
         {
