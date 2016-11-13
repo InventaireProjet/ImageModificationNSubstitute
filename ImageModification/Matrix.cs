@@ -10,6 +10,7 @@ using System.Text;
 
 namespace ImageEdgeDetection
 {
+    //BUSINESS LAYER
     public static class Matrix
     {
  

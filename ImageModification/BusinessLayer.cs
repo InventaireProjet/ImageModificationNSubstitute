@@ -9,15 +9,25 @@ using System.Windows.Forms;
 
 namespace ImageEdgeDetection
 {
-   public class BusinessLayer:IClicBouton
-    {       
+    public class BusinessLayer : IClickButton
+    {
+        private readonly ILoadImage loader;
+        private readonly ISaveImage saver;
         private Bitmap originalBitmap = null;
         private Bitmap previewBitmap = null;
         //Image to be saved at the end of the process
         private Bitmap resultBitmap = null;
-      
+
+        //Constructor charging the two I/O interfaces
+        public BusinessLayer(ILoadImage loader, ISaveImage saver)
+        {
+            this.loader = loader;
+            this.saver = saver;
+        }
+
+
         //Application of edge detection (mainly original method)
-        private Bitmap ApplyEdgeDetection(bool preview)
+        public Bitmap ApplyEdgeDetection(bool preview)
         {
             Bitmap imageForEdgeDetection = null;
 
@@ -35,65 +45,67 @@ namespace ImageEdgeDetection
             //Apply the edgeDetection 
             resultBitmap = imageForEdgeDetection.KirschFilter();
 
-           
+
             return resultBitmap;
         }
 
-        //Manage image loading and returns the preview
-        public Bitmap ImageOpening(OpenFileDialog ofd, PictureBox previewBox)
+        //Manage image loading and returns the preview, called by a presentation layer
+        public Bitmap ImageOpening(OpenFileDialog openFileDialog, PictureBox previewBox)
         {
-            //If ok is clicked in the presentation layer, loading starts
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            originalBitmap = null;
+
+            //I/O part called through the interface managing the loading
+            try
             {
-                 originalBitmap=null;
-
-                //I/O part called through the interface managing the loading
-                ILoadImage loader = new LoadImage();
-                originalBitmap = loader.loadImage(ofd.FileName);
-
-                //Creation of the preview bitmap
-                previewBitmap = originalBitmap.CopyToSquareCanvas(previewBox.Width);
-
-
-                //EdgeDetection is applied and stored in the previewBox.Image variable
-                previewBox.Image = ApplyEdgeDetection(true);
-               
-
-                return (Bitmap)previewBox.Image;
+                originalBitmap = loader.loadImage(openFileDialog.FileName);
+            }
+            catch (ArgumentException)
+            {
+                return null;
             }
 
-            return null;
+
+            //Creation of the preview bitmap
+            previewBitmap = originalBitmap.CopyToSquareCanvas(previewBox.Width);
+
+
+            //EdgeDetection is applied and stored in the previewBox.Image variable
+            previewBox.Image = ApplyEdgeDetection(true);
+
+
+            return (Bitmap)previewBox.Image;
         }
 
-        //Manage image saving and returns the image saved
-        public Bitmap ImageSaving(SaveFileDialog sfd)
+
+        //Manage image saving and returns the image saved, called by a presentation layer
+        public void ImageSaving(SaveFileDialog saveFileDialog)
         {
             //EdgeDetection is applied, the result is the image to save 
-            Bitmap savedImage =  ApplyEdgeDetection(false);
+            Bitmap savedImage = ApplyEdgeDetection(false);
 
-            //If ok is clicked in the presentation layer, saving starts
-            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //Setting the image format
+            string fileExtension = Path.GetExtension(saveFileDialog.FileName).ToUpper();
+            ImageFormat imgFormat = ImageFormat.Png;
+
+            if (fileExtension == ".BMP")
             {
-                string fileExtension = Path.GetExtension(sfd.FileName).ToUpper();
-                ImageFormat imgFormat = ImageFormat.Png;
-
-                if (fileExtension == "BMP")
-                {
-                    imgFormat = ImageFormat.Bmp;
-                }
-                else if (fileExtension == "JPG")
-                {
-                    imgFormat = ImageFormat.Jpeg;
-                }
-
-                //I/O part called through the interface managing the saving
-                ISaveImage saver = new SaveImage();
-                saver.saveImage(sfd.FileName, imgFormat, savedImage);
-
-
-                return savedImage;
+                imgFormat = ImageFormat.Bmp;
             }
-            return null;
+            else if (fileExtension == ".JPG")
+            {
+                imgFormat = ImageFormat.Jpeg;
+            }
+
+            //I/O part called through the interface managing the saving
+            try
+            {
+                saver.saveImage(saveFileDialog.FileName, imgFormat, savedImage);
+            }
+            catch
+            {
+                saveFileDialog.FileName = "empty";
+            }
+
         }
     }
 }

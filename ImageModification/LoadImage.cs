@@ -7,6 +7,7 @@ using System.Text;
 
 namespace ImageEdgeDetection
 {
+    // I/O LAYER
     class LoadImage:ILoadImage
     {
 

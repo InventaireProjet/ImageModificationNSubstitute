@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="BusinessLayer.cs" />
     <Compile Include="ExtBitmap.cs" />
-    <Compile Include="IClicBouton.cs" />
+    <Compile Include="IClickButton.cs" />
     <Compile Include="ILoadImage.cs" />
     <Compile Include="ISaveImage.cs" />
     <Compile Include="LoadImage.cs" />
