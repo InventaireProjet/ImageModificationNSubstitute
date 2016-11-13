@@ -3,10 +3,6 @@
  * View Documentation at: http://softwarebydefault.com
  * Licensed under Ms-PL 
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ImageEdgeDetection
 {
