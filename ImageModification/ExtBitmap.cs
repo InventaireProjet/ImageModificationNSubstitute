@@ -7,42 +7,12 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using System.Drawing.Drawing2D;
 
 namespace ImageEdgeDetection
 {
     //BUSINESS LAYER
     public static class ExtBitmap
     {
-        public static Bitmap CopyToSquareCanvas(this Bitmap sourceBitmap, int canvasWidthLength)
-        {
-            float ratio = 1.0f;
-            int maxSide = sourceBitmap.Width ;
-
-            ratio = (float)sourceBitmap.Width / (float)canvasWidthLength;
-
-            Bitmap bitmapResult = new Bitmap(canvasWidthLength, (int)(sourceBitmap.Height / ratio));
-
-            using (Graphics graphicsResult = Graphics.FromImage(bitmapResult))
-            {
-                graphicsResult.CompositingQuality = CompositingQuality.HighQuality;
-                graphicsResult.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphicsResult.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                graphicsResult.DrawImage(sourceBitmap,
-                                        new Rectangle(0, 0,
-                                            bitmapResult.Width, bitmapResult.Height),
-                                        new Rectangle(0, 0,
-                                            sourceBitmap.Width, sourceBitmap.Height),
-                                            GraphicsUnit.Pixel);
-                graphicsResult.Flush();
-            }
-
-            return bitmapResult;
-        }
-
-
-
        
         public static Bitmap ConvolutionFilter(this Bitmap sourceBitmap,
                                                 double[,] xFilterMatrix,

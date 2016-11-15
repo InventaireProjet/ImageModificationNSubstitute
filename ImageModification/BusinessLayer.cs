@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ImageEdgeDetection
@@ -14,7 +11,6 @@ namespace ImageEdgeDetection
         private readonly ILoadImage loader;
         private readonly ISaveImage saver;
         private Bitmap originalBitmap = null;
-        private Bitmap previewBitmap = null;
         //Image to be saved at the end of the process
         private Bitmap resultBitmap = null;
 
@@ -27,24 +23,11 @@ namespace ImageEdgeDetection
 
 
         //Application of edge detection (mainly original method)
-        public Bitmap ApplyEdgeDetection(bool preview)
+        public Bitmap ApplyEdgeDetection()
         {
-            Bitmap imageForEdgeDetection = null;
-
-            if (preview == true)
-            {
-                //If it is for the preview, we work on the preview image
-                imageForEdgeDetection = previewBitmap;
-            }
-            else
-            {
-                //If the image is going to be saved, it is the original that is modified
-                imageForEdgeDetection = originalBitmap;
-            }
-
+                        
             //Apply the edgeDetection 
-            resultBitmap = imageForEdgeDetection.KirschFilter();
-
+            resultBitmap = originalBitmap.KirschFilter();
 
             return resultBitmap;
         }
@@ -63,14 +46,9 @@ namespace ImageEdgeDetection
             {
                 return null;
             }
-
-
-            //Creation of the preview bitmap
-            previewBitmap = originalBitmap.CopyToSquareCanvas(previewBox.Width);
-
-
+                        
             //EdgeDetection is applied and stored in the previewBox.Image variable
-            previewBox.Image = ApplyEdgeDetection(true);
+            previewBox.Image = ApplyEdgeDetection();
 
 
             return (Bitmap)previewBox.Image;
@@ -81,7 +59,7 @@ namespace ImageEdgeDetection
         public void ImageSaving(SaveFileDialog saveFileDialog)
         {
             //EdgeDetection is applied, the result is the image to save 
-            Bitmap savedImage = ApplyEdgeDetection(false);
+            Bitmap savedImage = ApplyEdgeDetection();
 
             //Setting the image format
             string fileExtension = Path.GetExtension(saveFileDialog.FileName).ToUpper();
