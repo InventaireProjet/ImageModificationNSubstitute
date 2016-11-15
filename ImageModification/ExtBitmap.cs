@@ -14,17 +14,14 @@ namespace ImageEdgeDetection
     //BUSINESS LAYER
     public static class ExtBitmap
     {
-        public static Bitmap CopyToSquareCanvas(this Bitmap sourceBitmap, int canvasWidthLenght)
+        public static Bitmap CopyToSquareCanvas(this Bitmap sourceBitmap, int canvasWidthLength)
         {
             float ratio = 1.0f;
-            int maxSide = sourceBitmap.Width > sourceBitmap.Height ?
-                          sourceBitmap.Width : sourceBitmap.Height;
+            int maxSide = sourceBitmap.Width ;
 
-            ratio = (float)maxSide / (float)canvasWidthLenght;
+            ratio = (float)sourceBitmap.Width / (float)canvasWidthLength;
 
-            Bitmap bitmapResult = (sourceBitmap.Width > sourceBitmap.Height ?
-                                    new Bitmap(canvasWidthLenght, (int)(sourceBitmap.Height / ratio))
-                                    : new Bitmap((int)(sourceBitmap.Width / ratio), canvasWidthLenght));
+            Bitmap bitmapResult = new Bitmap(canvasWidthLength, (int)(sourceBitmap.Height / ratio));
 
             using (Graphics graphicsResult = Graphics.FromImage(bitmapResult))
             {

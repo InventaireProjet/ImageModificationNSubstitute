@@ -166,7 +166,7 @@ namespace ImageModificationTest
         }
 
 
-        //Internal test in the business layer
+        //Small internal test in the business layer
         [TestMethod]
         public void TestSizeImageKirsch()
         {
@@ -181,7 +181,7 @@ namespace ImageModificationTest
 
     
 
-        //Internal test in the business layer       
+        //Small internal test in the business layer       
         [TestMethod]
         //Tests that the method returns null if a null image is used
         public void TestEmptyImageKirsch()
