@@ -11,7 +11,6 @@ using System.Drawing.Drawing2D;
 
 namespace ImageEdgeDetection
 {
-    //BUSINESS LAYER
     public static class ExtBitmap
     {
         public static Bitmap CopyToSquareCanvas(this Bitmap sourceBitmap, int canvasWidthLenght)

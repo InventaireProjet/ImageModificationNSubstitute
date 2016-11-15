@@ -3,7 +3,6 @@ using System.IO;
 
 namespace ImageEdgeDetection
 {
-    // I/O LAYER
     class LoadImage:ILoadImage
     {
 
