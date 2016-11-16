@@ -33,7 +33,7 @@ namespace ImageModificationTest
         public static PictureBox CreatePictureBox()
         {
             PictureBox pictureBox = new PictureBox();
-            //Width
+            //Width that corresponds to the width of the test image
             pictureBox.Width = 159;
             return pictureBox;
         }
@@ -58,8 +58,8 @@ namespace ImageModificationTest
             OpenFileDialog fakeOpenFileDialog = CreateOpenFileDialog();
             PictureBox fakePictureBox = CreatePictureBox();
 
-            //Substitute always send the originalImage when the loadImage from the interface is called
-            loaderSubstitute.loadImage(Arg.Any<string>()).Returns(originalImage);
+            //Substitute sends the originalImage when the loadImage from the interface is called with "fake" as filename
+            loaderSubstitute.loadImage("fake").Returns(originalImage);
 
             //Execution of ImageOpening
             Bitmap loadedImage = testBusinessLayer.ImageOpening(fakeOpenFileDialog, fakePictureBox);
@@ -174,7 +174,7 @@ namespace ImageModificationTest
 
         }
 
-    
+
 
         //Small internal test in the business layer       
         [TestMethod]

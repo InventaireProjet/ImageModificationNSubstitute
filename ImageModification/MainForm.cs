@@ -5,11 +5,7 @@
  * It was further modified by Zappellaz Nancy & Mabillard Julien
 */
 using System;
-
-using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
-using System.Drawing.Imaging;
 
 
 namespace ImageEdgeDetection
@@ -41,7 +37,7 @@ namespace ImageEdgeDetection
 
             /*If ok is clicked, the business layer is called, 
              which sends back the image to put in the preview box*/
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (clicker.ImageOpening(openFileDialog, picPreview) != null)
                 {
@@ -65,7 +61,7 @@ namespace ImageEdgeDetection
             saveFileDialog.Filter += "|Bitmap Images(*.bmp)|*.bmp";
 
             //The rest is done by the business layer, if ok is clicked
-            if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 clicker.ImageSaving(saveFileDialog);
             }

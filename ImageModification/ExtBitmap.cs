@@ -13,7 +13,7 @@ namespace ImageEdgeDetection
     //BUSINESS LAYER
     public static class ExtBitmap
     {
-       
+
         public static Bitmap ConvolutionFilter(this Bitmap sourceBitmap,
                                                 double[,] xFilterMatrix,
                                                 double[,] yFilterMatrix,
@@ -160,7 +160,7 @@ namespace ImageEdgeDetection
                 return null;
             }
 
-            Bitmap resultBitmap = ExtBitmap.ConvolutionFilter(sourceBitmap,
+            Bitmap resultBitmap = ConvolutionFilter(sourceBitmap,
                                                 Matrix.Kirsch3x3Horizontal,
                                                   Matrix.Kirsch3x3Vertical,
                                                         1.0, 0, grayscale);

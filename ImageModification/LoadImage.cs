@@ -4,7 +4,7 @@ using System.IO;
 namespace ImageEdgeDetection
 {
     // I/O LAYER
-    class LoadImage:ILoadImage
+    class LoadImage : ILoadImage
     {
 
         //Implementation of the interface ILoadImage, only streamReader

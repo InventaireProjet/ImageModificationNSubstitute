@@ -9,7 +9,7 @@ namespace ImageEdgeDetection
     //BUSINESS LAYER
     public static class Matrix
     {
- 
+
         public static double[,] Kirsch3x3Horizontal
         {
             get

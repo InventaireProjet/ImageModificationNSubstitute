@@ -25,7 +25,7 @@ namespace ImageEdgeDetection
         //Application of edge detection (mainly original method)
         public Bitmap ApplyEdgeDetection()
         {
-                        
+
             //Apply the edgeDetection 
             resultBitmap = originalBitmap.KirschFilter();
 
@@ -46,7 +46,7 @@ namespace ImageEdgeDetection
             {
                 return null;
             }
-                        
+
             //EdgeDetection is applied and stored in the previewBox.Image variable
             previewBox.Image = ApplyEdgeDetection();
 
